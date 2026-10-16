@@ -1,0 +1,31 @@
+{
+  "name": "kmermarket",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KmerMarket — plateforme e-commerce camerounaise (React + Express + PostgreSQL)",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run dev --workspace=backend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspace=frontend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "start": "npm run start --workspace=backend",
+    "start:backend": "npm run start --workspace=backend",
+    "preview": "npm run preview --workspace=frontend",
+    "install:all": "npm install --workspace=backend && npm install --workspace=frontend",
+    "db:create": "npm run db:create --workspace=backend",
+    "db:migrate": "npm run db:migrate --workspace=backend",
+    "db:seed": "npm run db:seed --workspace=backend",
+    "db:reset": "npm run db:reset --workspace=backend",
+    "db:setup": "npm run db:setup --workspace=backend",
+    "verify": "node ./tools/verify-project.mjs"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

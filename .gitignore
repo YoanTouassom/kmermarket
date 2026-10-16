@@ -4,3 +4,5 @@ dist/
 .env.local
 *.log
 .DS_Store
+# Lock racine : chaque workspace (backend/, frontend/) versionne le sien.
+package-lock.json

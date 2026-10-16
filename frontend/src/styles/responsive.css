@@ -1,0 +1,157 @@
+/* ============================================================
+   KmerMarket — Dropdown compte + Responsive
+   ============================================================ */
+
+/* Dropdown (menu compte) */
+.mf-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 244px;
+  background: #fff;
+  border: 1px solid var(--ink-200);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  z-index: 80;
+}
+.mf-dropdown-head {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ink-200);
+  display: flex;
+  flex-direction: column;
+}
+.mf-dropdown-head strong {
+  font-family: var(--font-display);
+  font-size: 14.5px;
+}
+.mf-dropdown-head span {
+  font-size: 12.5px;
+  color: var(--ink-500);
+}
+.mf-dropdown a,
+.mf-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 11px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-700);
+  transition: background var(--t-fast);
+}
+.mf-dropdown a:hover,
+.mf-dropdown button:hover {
+  background: var(--green-50);
+  color: var(--green-700);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .mf-nav {
+    display: none;
+  }
+  .mf-burger {
+    display: grid;
+  }
+  .mf-header-search {
+    max-width: 300px;
+  }
+  .mf-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .mf-hero-media {
+    order: -1;
+  }
+  .mf-hero-float.a {
+    left: 6px;
+  }
+  .mf-hero-float.b {
+    right: 6px;
+  }
+  .mf-cart-layout {
+    grid-template-columns: 1fr;
+  }
+  .mf-summary {
+    position: static;
+  }
+  .mf-account-layout {
+    grid-template-columns: 1fr;
+  }
+  .mf-account-nav {
+    position: static;
+  }
+  .mf-shop-layout {
+    grid-template-columns: 1fr;
+  }
+  .mf-filters {
+    position: static;
+  }
+  .mf-pdp {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .mf-mobile-filter-btn {
+    display: inline-flex;
+  }
+  .mf-filters.collapsed {
+    display: none;
+  }
+  .mf-band {
+    grid-template-columns: 1fr;
+    padding: 30px;
+  }
+  .mf-footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .mf-hide-sm {
+    display: none;
+  }
+  .mf-footer-top {
+    grid-template-columns: 1fr;
+  }
+  .mf-hero-float {
+    display: none;
+  }
+  .mf-cart-item {
+    grid-template-columns: 76px 1fr;
+    gap: 12px;
+  }
+  .mf-cart-item img {
+    width: 76px;
+    height: 76px;
+  }
+  .mf-cart-item .mf-cart-actions {
+    grid-column: 2;
+  }
+  .mf-toasts {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    max-width: none;
+  }
+  .mf-pdp-facts {
+    grid-template-columns: 1fr;
+  }
+  .mf-auth-wrap {
+    grid-template-columns: 1fr;
+  }
+  .mf-auth-aside {
+    display: none;
+  }
+  .mf-order-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .mf-cat-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}

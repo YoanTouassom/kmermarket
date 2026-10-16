@@ -1,0 +1,34 @@
+{
+  "name": "kmermarket-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "KmerMarket — API REST (Node.js, Express, PostgreSQL, JWT)",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "db:create": "node src/database/createDatabase.js",
+    "db:migrate": "node src/database/migrate.js",
+    "db:seed": "node src/database/seed.js",
+    "db:reset": "node src/database/migrate.js --reset",
+    "db:setup": "node src/database/createDatabase.js && node src/database/migrate.js && node src/database/seed.js",
+    "test:api": "node scripts/smoke-test.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

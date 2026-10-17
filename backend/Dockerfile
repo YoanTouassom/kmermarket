@@ -8,7 +8,7 @@ RUN npm ci --omit=dev
 COPY src ./src
 
 ENV NODE_ENV=production
-# Koyeb injecte PORT automatiquement ; le code lit process.env.PORT.
+# L'hébergeur injecte PORT automatiquement ; le code lit process.env.PORT.
 # Le healthcheck attendu est GET /api/health (voir src/app.js).
 
 EXPOSE 5000

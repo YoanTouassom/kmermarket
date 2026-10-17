@@ -27,7 +27,7 @@ console.log('\n🔍 KmerMarket — vérification du projet\n')
 console.log('📁 Fichiers requis :')
 const required = [
   'package.json',
-  'backend/Dockerfile',
+  'render.yaml',
   'DEPLOY.md',
   '.env.production.example',
   'backend/package.json',
@@ -101,7 +101,7 @@ try {
 
   const pool = fs.readFileSync(path.join(root, 'backend/src/database/pool.js'), 'utf8')
   if (pool.includes('DATABASE_URL') || pool.includes('connectionString'))
-    ok('pool compatible DATABASE_URL (Neon/Koyeb/Railway)')
+    ok('pool compatible DATABASE_URL (Neon/Render/Railway)')
   else fail('pool incompatible DATABASE_URL', 'voir backend/src/database/pool.js')
 } catch {
   fail('lecture des fichiers de contrat impossible')

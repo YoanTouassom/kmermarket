@@ -20,7 +20,7 @@ async function main() {
     return
   }
 
-  // En production (Koyeb), le schéma est appliqué automatiquement à chaque
+  // En production (Render), le schéma est appliqué automatiquement à chaque
   // démarrage : les déploiements mettent la base à jour sans action manuelle.
   // `schema.sql` est idempotent (CREATE TABLE IF NOT EXISTS…) : sans danger.
   if (process.env.DB_AUTO_MIGRATE !== 'false') {

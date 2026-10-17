@@ -25,7 +25,7 @@ export const env = {
   port: Number(process.env.PORT || 5000),
 
   db: {
-    // DATABASE_URL prioritaire (Neon / Koyeb / Railway). Sinon champs séparés (local).
+    // DATABASE_URL prioritaire (Neon / Render / Railway). Sinon champs séparés (local).
     url: process.env.DATABASE_URL || '',
     host: process.env.DB_HOST || 'localhost',
     port: Number(process.env.DB_PORT || 5432),

@@ -1,0 +1,35 @@
+# ============================================================
+#  KmerMarket — API backend (Node.js + Express) sur Render
+#  Base de données : Neon (gratuite, sans expiration) — voir DEPLOY.md
+#  Spécification : https://render.com/docs/blueprint-spec
+# ============================================================
+
+services:
+  - type: web
+    name: kmermarket-api
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: backend
+    # --workspaces=false : utilise backend/package-lock.json (pas de lock racine versionné).
+    buildCommand: npm ci --omit=dev --workspaces=false
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NODE_VERSION
+        value: 20
+      # Connection String Neon, demandée à la création du Blueprint.
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: DB_AUTO_MIGRATE
+        value: "true"
+      # URL du frontend Vercel (sans / final), demandée à la création du Blueprint.
+      - key: CORS_ORIGIN
+        sync: false

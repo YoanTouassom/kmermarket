@@ -17,9 +17,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const SCHEMA_FILE = path.join(__dirname, 'schema.sql')
 const MIGRATION_NAME = '0001_init'
 
-async function main() {
-  const reset = process.argv.includes('--reset')
-
+export async function runMigrations({ reset = false } = {}) {
   const info = await testConnection()
   console.log(`[db] connecté à « ${info.db} »`)
   console.log(`[db] ${info.version.split(' on ')[0]}`)
@@ -48,9 +46,19 @@ async function main() {
   console.log('[db] migration terminée.')
 }
 
-main()
-  .catch((err) => {
-    console.error('[db] échec de la migration :', err.message)
-    process.exitCode = 1
-  })
-  .finally(closePool)
+async function main() {
+  const reset = process.argv.includes('--reset')
+  await runMigrations({ reset })
+}
+
+const isDirectRun =
+  process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
+
+if (isDirectRun) {
+  main()
+    .catch((err) => {
+      console.error('[db] échec de la migration :', err.message)
+      process.exitCode = 1
+    })
+    .finally(closePool)
+}

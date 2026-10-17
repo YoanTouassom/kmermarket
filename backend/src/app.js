@@ -19,6 +19,11 @@ export function createApp() {
 
   app.disable('x-powered-by')
 
+  // Derrière Koyeb (TLS terminé par le proxy), Express doit faire confiance
+  // à `X-Forwarded-Proto` pour que les cookies `Secure` / `SameSite=None`
+  // fonctionnent correctement en production cross-domain (Vercel ↔ Koyeb).
+  app.set('trust proxy', 1)
+
   app.use(
     cors({
       origin: env.cors.origin,

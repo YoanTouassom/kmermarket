@@ -25,7 +25,9 @@ import { changePassword } from '../controllers/authController.js'
 
 const router = Router()
 
-router.use(authenticate)
+// Limité aux préfixes de l'espace client : une route /api inconnue doit
+// tomber sur le 404, pas sur un 401.
+router.use(['/me', '/cart', '/orders'], authenticate)
 
 /* ------------------------------- Profil ------------------------------- */
 

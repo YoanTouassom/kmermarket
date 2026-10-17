@@ -1,165 +1,102 @@
-# 🚀 Mise en ligne de KmerMarket (option 100 % gratuite)
+# 🚀 Mise en ligne de KmerMarket — Vercel + Koyeb + Neon (100 % gratuit)
 
-> **Architecture cible :** Frontend → **Vercel** · API → **Render** · PostgreSQL → **Render**
-> Coût : **0 FCFA**. Durée estimée : **45–60 minutes**.
-
----
+> **Architecture :** Frontend → **Vercel** · API → **Koyeb** · PostgreSQL → **Neon**
+> Coût : **0 FCFA**, aucune carte bancaire exigée. Durée estimée : **30–45 minutes**.
 
 ## 0. Prérequis
 
-- [ ] Un compte **GitHub** (gratuit) : https://github.com/signup
-- [ ] Un compte **Render** (gratuit, connexion via GitHub) : https://render.com
-- [ ] Un compte **Vercel** (gratuit, connexion via GitHub) : https://vercel.com
-- [ ] Le projet qui fonctionne **en local** (`npm run dev` + `npm run dev`)
+- [ ] Code poussé sur **GitHub** : https://github.com/YoanTouassom/kmermarket
+- [ ] Compte **Neon** (Postgres gratuit) : https://neon.tech — connexion via GitHub
+- [ ] Compte **Koyeb** (API Node gratuite) : https://app.koyeb.com — connexion via GitHub
+- [ ] Compte **Vercel** (frontend gratuit) : https://vercel.com — connexion via GitHub
 
----
+## 1. Base de données Neon (5 min)
 
-## 1. Pousser le code sur GitHub (10 min)
-
-Le dossier racine `sophia/` contient déjà un `.gitignore` qui protège
-`node_modules/`, `dist/` et **`.env`** (votre mot de passe Postgres ne partira
-jamais sur GitHub ✅ — vérifié).
-
-```powershell
-cd c:/Users/YOAN/Desktop/sophia
-git init
-git add .
-git status          # vérifiez qu'aucun .env n'apparaît !
-git commit -m "KmerMarket : application full-stack prete pour la prod"
-git branch -M main
-git remote add origin https://github.com/VOTRE_PSEUDO/kmermarket.git
-git push -u origin main
-```
-
-> Créez d'abord le dépôt vide `kmermarket` sur github.com (sans README).
-
----
-
-## 2. Base de données + API sur Render (15 min)
-
-### 2.1 Déployer avec le Blueprint (méthode automatique)
-
-1. Sur https://dashboard.render.com → **New → Blueprint** → connectez le dépôt `kmermarket`.
-2. Render détecte automatiquement le fichier **`render.yaml`** (à la racine) et crée :
-   - la base **`kmermarket-db`** (PostgreSQL gratuit),
-   - l'API **`kmermarket-api`** (Node.js).
-3. Cliquez **Apply**. Attendez que les deux services passent au vert (~5 min).
-
-### 2.2 Initialiser la base distante (une seule fois)
-
-La base Render est **vide** : il faut y appliquer le schéma + les données.
-Depuis votre PC, en pointant temporairement vers la base distante :
+1. Sur https://neon.tech → **New Project** : nom `kmermarket`, Postgres 16, région **Frankfurt** (AWS eu-central-1).
+2. Dashboard → **Connect** → copiez la **Connection String** (cochez *Pooled connection*) :
+   `postgresql://user:pass@ep-xxx-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require`
+3. Remplissez la base **une seule fois** depuis votre PC (schéma + catalogue + compte admin) :
 
 ```powershell
 cd c:/Users/YOAN/Desktop/sophia/backend
-$env:DATABASE_URL="postgresql://...copiee_depuis_le_dashboard_render..."
+$env:DATABASE_URL="postgresql://...copiee_depuis_neon..."
+$env:ADMIN_EMAIL="admin@kmermarket.cm"
+$env:ADMIN_PASSWORD="mot_de_passe_admin_solide"
 npm run db:migrate
 npm run db:seed
 ```
 
-> Où trouver l'URL ? Dashboard Render → `kmermarket-db` → **Connections** →
-> **External Database URL**. Remettez vos variables locales ensuite
-> (ou rouvrez simplement un nouveau terminal).
+> Les variables `$env:` priment sur `backend/.env` : votre base locale n'est pas touchée.
+> Fermez ensuite ce terminal pour ne pas viser Neon par erreur.
 
-### 2.3 Vérifier l'API
+## 2. API sur Koyeb (10 min)
 
-Ouvrez dans le navigateur :
+1. Sur https://app.koyeb.com → **Create Service** → **Web Service** → **GitHub** → dépôt `kmermarket`, branche `main`.
+2. **Builder** : choisissez **Dockerfile**, puis :
+   - **Dockerfile location** : `Dockerfile`
+   - **Work directory** : `backend` ⚠️ (indispensable : le Dockerfile copie `package.json` et `src/` depuis ce dossier)
+3. **Instance** : **Free** · **Region** : **Frankfurt**.
+4. **Ports** : `8000` → protocole HTTP, chemin `/` (Koyeb injecte `PORT=8000`, le code le lit).
+5. **Health checks** : TCP par défaut, ou HTTP sur `/api/health`.
+6. **Environment variables** :
 
 ```
-https://kmermarket-api.onrender.com/api/health
+NODE_ENV=production
+DATABASE_URL=postgresql://...neon...?sslmode=require
+JWT_SECRET=<64 caracteres aleatoires, voir commande ci-dessous>
+JWT_EXPIRES_IN=7d
+DB_AUTO_MIGRATE=true
+CORS_ORIGIN=https://kmer-market.vercel.app
 ```
 
-Attendu : `{"ok":true,"service":"kmermarket-api",...}` ✅
-(La première requête peut prendre ~60 s : l'offre gratuite « dort » après
-inactivité — c'est normal, voir §5.)
+   Générer `JWT_SECRET` :
+   `node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"`
 
----
+7. Nom du service : `kmermarket-api` → **Deploy** (~3 min).
+8. Ouvrez `https://kmermarket-api-<vous>.koyeb.app/api/health` → doit afficher `{"ok":true,...}` ✅.
+
+> Instance gratuite : elle se met en veille après ~1 h sans trafic ; la 1ʳᵉ requête suivante prend quelques secondes.
 
 ## 3. Frontend sur Vercel (10 min)
 
-### 3.1 Importer le projet
-
 1. Sur https://vercel.com → **Add New → Project** → importez `kmermarket`.
-2. **Root Directory** : `frontend` (⚠️ indispensable : le dépôt contient
-   `backend/`, `frontend/`, `render.yaml` à la racine).
-3. Framework détecté : **Vite** ; `vercel.json` force déjà le fallback SPA
-   (`/admin`, `/orders/123`, … ne donneront pas de 404) ✅.
+2. **Root Directory** : `frontend` (Framework **Vite** détecté ; le fallback SPA est dans `frontend/vercel.json`).
+3. **Environment Variables** :
+   `VITE_API_URL=https://kmermarket-api-<vous>.koyeb.app/api`
+   (figée au build : si l'URL change, **Redeploy**).
+4. **Deploy** → notez l'URL obtenue, par ex. `https://kmer-market.vercel.app`.
 
-### 3.2 Variable d'environnement (avant de déployer !)
+## 4. Relier frontend et backend (2 min)
 
-Onglet **Settings → Environment Variables** (ou directement à l'import) :
+Si l'URL Vercel diffère de celle mise à l'étape 2 : Koyeb → `kmermarket-api` → **Settings → Environment variables** →
+`CORS_ORIGIN=https://<votre-projet>.vercel.app` (sans `/` final, plusieurs URL séparées par des virgules) → **Save and deploy**.
 
-| Clé | Valeur |
-|---|---|
-| `VITE_API_URL` | `https://kmermarket-api.onrender.com/api` |
+## 5. Checklist finale
 
-> ⚠️ Remplacez `kmermarket-api` par le vrai nom si Render l'a suffixé
-> (ex. `kmermarket-api-xxxx`). Cette variable est **figée au build** :
-> tout changement exige un **Redeploy**.
+- [ ] `https://…koyeb.app/api/health` répond `{"ok":true}`
+- [ ] `https://…vercel.app` affiche la boutique et les produits
+- [ ] Inscription + connexion OK (cookie `km_token`)
+- [ ] Panier → commande sans erreur
+- [ ] Connexion admin (identifiants de l'étape 1) → dashboard OK
+- [ ] `CORS_ORIGIN` = URL Vercel exacte
+- [ ] `JWT_SECRET` de prod différent de celui du local
 
-### 3.3 Déployer et tester
+## Dépannage
 
-1. **Deploy** → URL du type `https://kmer-market.vercel.app`.
-2. Testez : accueil → boutique → inscription → connexion → panier → commande
-   → dashboard admin (`admin@kmermarket.cm` + le mot de passe généré par
-   Render, onglet **Environment** de `kmermarket-api`).
-
----
-
-## 4. Relier frontend ↔ backend (5 min, étape cruciale)
-
-Le backend n'accepte que l'origine déclarée dans `CORS_ORIGIN`. Sans cela,
-le navigateur bloque toutes les requêtes API.
-
-1. Dashboard Render → service `kmermarket-api` → **Environment** :
-   ```
-   CORS_ORIGIN=https://kmer-market.vercel.app
-   ```
-   (votre vraie URL Vercel ; plusieurs origines possibles, séparées par des virgules)
-2. Le service redéploie automatiquement (~2 min).
-3. Rechargez le site Vercel (Ctrl+F5) et reconnectez-vous.
-
-> 🔐 **Sessions en ligne** : le backend pose le cookie `km_token` en
-> `SameSite=None; Secure` en production (voir `authController.js`),
-> ce qui autorise le schéma cross-domain Vercel ↔ Render en HTTPS.
-> Si un navigateur bloque quand même les cookies tiers, le token JWT est
-> aussi renvoyé dans la réponse JSON `{ user, token }` : prévoyez alors
-> l'en-tête `Authorization: Bearer` (déjà accepté par `middleware/auth.js`).
-
----
-
-## 5. Limites de l'offre gratuite (à connaître)
-
-| Service | Limite | Conséquence |
+| Symptôme | Cause probable | Solution |
 |---|---|---|
-| Render Web (free) | Dort après 15 min d'inactivité, 750 h/mois | 1ʳᵉ requête lente (~60 s), puis fluide |
-| Render Postgres (free) | 1 Go, expire après **90 jours** | Pensez à sauvegarder (`pg_dump`) |
-| Vercel (hobby) | 100 Go de bande passante/mois | Largement suffisant pour démarrer |
-| Neon (si utilisé) | 500 Mo, s'endort après inactivité | Réveil automatique en ~2 s |
+| Build Koyeb : `package.json not found` / mauvais fichier | Work directory non défini | Koyeb → Settings → Builder → Work directory `backend` |
+| Logs Koyeb : `impossible de joindre PostgreSQL` | `DATABASE_URL` erronée | Recopiez-la depuis Neon (avec `?sslmode=require`) |
+| Logs : `Variable d'environnement manquante : JWT_SECRET` | Variable absente | Ajoutez `JWT_SECRET` dans Koyeb |
+| Frontend : erreurs CORS dans la console | `CORS_ORIGIN` ≠ URL Vercel | Corrigez `CORS_ORIGIN` (sans `/` final) |
+| Connexion OK puis déconnecté au rechargement | Cookie bloqué | Vérifiez `NODE_ENV=production` sur Koyeb |
+| Boutique vide | Seed non lancé | Refaites l'étape 1.3 |
 
-**Quand passer au payant ?** Dès que vous avez des clients réguliers ou
-Mobile Money réel : VPS (~5 €/mois) + `kmermarket.cm` (voir README § VPS).
-
----
-
-## 6. Checklist finale ✅
-
-- [ ] `https://…onrender.com/api/health` répond `{"ok":true}`
-- [ ] `https://…vercel.app` affiche la boutique (30 produits)
-- [ ] Inscription + connexion fonctionnent (cookie `km_token` posé)
-- [ ] Panier → commande → confirmation, sans erreur 400
-- [ ] Dashboard admin : stats, produits, commandes, utilisateurs
-- [ ] `CORS_ORIGIN` = URL Vercel exacte (pas de `/` final)
-- [ ] `ADMIN_PASSWORD` changé après la première connexion
-- [ ] `JWT_SECRET` de prod différent du secret local
-
----
-
-## 7. Fichiers de déploiement fournis
+## Fichiers liés au déploiement
 
 | Fichier | Rôle |
 |---|---|
-| `render.yaml` | Blueprint Render : DB + API d'un clic |
-| `frontend/vercel.json` | Build Vite + fallback SPA |
-| `.env.production.example` | Modèle des variables de prod (sans secrets) |
-| `backend/.env.example` | Modèle des variables locales |
+| `backend/Dockerfile` | Image de l'API pour Koyeb |
+| `frontend/vercel.json` | Build Vite + fallback SPA pour Vercel |
+| `.env.production.example` | Liste des variables de production |
+| `npm run verify` | Vérifie la cohérence du projet avant déploiement |

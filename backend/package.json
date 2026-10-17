@@ -12,8 +12,7 @@
     "db:migrate": "node src/database/migrate.js",
     "db:seed": "node src/database/seed.js",
     "db:reset": "node src/database/migrate.js --reset",
-    "db:setup": "node src/database/createDatabase.js && node src/database/migrate.js && node src/database/seed.js",
-    "test:api": "node scripts/smoke-test.mjs"
+    "db:setup": "node src/database/createDatabase.js && node src/database/migrate.js && node src/database/seed.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

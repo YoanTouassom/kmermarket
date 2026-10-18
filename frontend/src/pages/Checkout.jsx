@@ -29,7 +29,7 @@ import {
   EmptyState,
 } from "../components/ui/primitives";
 import { formatPrice } from "../utils/format";
-import { CITIES, PAYMENT_METHODS } from "../utils/constants";
+import { CITIES, PAYMENT_METHODS, formatMobileNumber } from "../utils/constants";
 
 const STEPS = ["Informations", "Livraison", "Paiement"];
 
@@ -199,6 +199,22 @@ export default function Checkout() {
               </div>
             </div>
 
+            {(() => {
+              const pm = PAYMENT_METHODS.find((p) => p.value === placed.paymentMethod);
+              if (!pm?.number) return null;
+              return (
+                <div className="mf-info-block" style={{ textAlign: "left", marginBottom: 22 }}>
+                  <div className="tt">Finalisez votre paiement {pm.label}</div>
+                  <div className="ln">
+                    Envoyez <strong>{formatPrice(placed.total)}</strong> au{" "}
+                    <strong>{formatMobileNumber(pm.number)}</strong> en indiquant la
+                    référence <strong>{placed.reference}</strong>. Votre commande sera
+                    confirmée dès réception du paiement.
+                  </div>
+                </div>
+              );
+            })()}
+
             <div
               style={{
                 display: "flex",
@@ -352,7 +368,6 @@ export default function Checkout() {
               </h3>
               {PAYMENT_METHODS.map((m) => {
                 const Ic = Icons[m.icon] || Wallet;
-                const soon = m.value !== "cash";
                 return (
                   <label
                     key={m.value}
@@ -370,7 +385,6 @@ export default function Checkout() {
                     <span>
                       <span className="tt">
                         {m.label}
-                        {soon && <span className="soon">Bientôt</span>}
                       </span>
                       <span className="ds">{m.description}</span>
                     </span>

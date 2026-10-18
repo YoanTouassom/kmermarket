@@ -95,7 +95,7 @@
         "frais",
         "local"
       ],
-      "image": "/products/tomates-fraiches.jpg",
+      "image": "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-06-01"
@@ -121,7 +121,7 @@
         "grillade",
         "mûr"
       ],
-      "image": "/products/plantains-murs.jpg",
+      "image": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-05-20"
@@ -147,7 +147,7 @@
         "chips",
         "vert"
       ],
-      "image": "/products/plantains-verts.jpg",
+      "image": "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-22"
@@ -173,7 +173,7 @@
         "sucré",
         "vitaminé"
       ],
-      "image": "/products/bananes-douces.jpg",
+      "image": "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-06-10"
@@ -199,7 +199,7 @@
         "purée",
         "polyvalent"
       ],
-      "image": "/products/pommes-de-terre.jpg",
+      "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-04-15"
@@ -225,7 +225,7 @@
         "fibres",
         "santé"
       ],
-      "image": "/products/patates-douces.jpg",
+      "image": "https://images.unsplash.com/photo-1596120408700-2d3d49ec6ee5?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-02"
@@ -251,7 +251,7 @@
         "sauce",
         "conservation"
       ],
-      "image": "/products/oignons-rouges.jpg",
+      "image": "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-03-30"
@@ -277,7 +277,7 @@
         "santé",
         "condiment"
       ],
-      "image": "/products/ail-frais.jpg",
+      "image": "https://images.unsplash.com/photo-1540148426945-6cf22a6b2383?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-04-05"
@@ -303,7 +303,7 @@
         "brochette",
         "coloré"
       ],
-      "image": "/products/poivrons-verts.jpg",
+      "image": "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": true,
       "createdAt": "2026-07-01"
@@ -329,7 +329,7 @@
         "sauce",
         "piquant"
       ],
-      "image": "/products/piments-forts.jpg",
+      "image": "https://images.unsplash.com/photo-1583119022894-919a68a3d0e3?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-04-18"
@@ -355,7 +355,7 @@
         "salade",
         "vitaminé"
       ],
-      "image": "/products/carottes.jpg",
+      "image": "https://images.unsplash.com/photo-1447175008436-054170c2e979?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-12"
@@ -381,7 +381,7 @@
         "detox",
         "frais"
       ],
-      "image": "/products/concombres.jpg",
+      "image": "https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-25"
@@ -407,7 +407,7 @@
         "braisé",
         "accompagnement"
       ],
-      "image": "/products/chou-vert.jpg",
+      "image": "https://images.unsplash.com/photo-1594282486552-05b4d80fbb9f?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-28"
@@ -433,7 +433,7 @@
         "traditionnel",
         "onctueux"
       ],
-      "image": "/products/gombo-frais.jpg",
+      "image": "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-04-22"
@@ -459,7 +459,7 @@
         "salade",
         "santé"
       ],
-      "image": "/products/avocats.jpg",
+      "image": "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-06-15"
@@ -485,7 +485,7 @@
         "sucré",
         "saison"
       ],
-      "image": "/products/mangues-mures.jpg",
+      "image": "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-06-20"
@@ -511,7 +511,7 @@
         "célèbre",
         "vitaminé"
       ],
-      "image": "/products/ananas.jpg",
+      "image": "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-06-05"
@@ -537,7 +537,7 @@
         "été",
         "hydratant"
       ],
-      "image": "/products/pasteque.jpg",
+      "image": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-06-25"
@@ -563,7 +563,7 @@
         "bouilli",
         "encas"
       ],
-      "image": "/products/mais-frais.jpg",
+      "image": "https://images.unsplash.com/photo-1601233190073-3ad9fdf8b6ef?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-07-02"
@@ -589,7 +589,7 @@
         "ragoût",
         "local"
       ],
-      "image": "/products/haricots-rouges.jpg",
+      "image": "https://images.unsplash.com/photo-1551462147-37885acc36f1?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-04-10"
@@ -615,7 +615,7 @@
         "bâton",
         "couscous"
       ],
-      "image": "/products/manioc-frais.jpg",
+      "image": "https://images.unsplash.com/photo-1596097510183-24f2f7d5a4b5?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-04-28"
@@ -641,7 +641,7 @@
         "traditionnel",
         "onctueux"
       ],
-      "image": "/products/macabo.jpg",
+      "image": "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": true,
       "createdAt": "2026-07-08"
@@ -667,7 +667,7 @@
         "frites",
         "résistant"
       ],
-      "image": "/products/igname.jpg",
+      "image": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-15"
@@ -693,7 +693,7 @@
         "sauce",
         "traditionnel"
       ],
-      "image": "/products/huile-de-palme-rouge.jpg",
+      "image": "https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-03-20"
@@ -719,7 +719,7 @@
         "pâte",
         "grillé"
       ],
-      "image": "/products/arachides-grillees.jpg",
+      "image": "https://images.unsplash.com/photo-1567892737950-30c4db37cd89?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-04-12"
@@ -745,7 +745,7 @@
         "infusion",
         "piquant"
       ],
-      "image": "/products/gingembre-frais.jpg",
+      "image": "https://images.unsplash.com/photo-1615485500704-8e990f9900f7?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-08"
@@ -771,7 +771,7 @@
         "condiment",
         "label"
       ],
-      "image": "/products/poivre-de-penja.jpg",
+      "image": "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-03-25"
@@ -797,7 +797,7 @@
         "bouillie",
         "farine"
       ],
-      "image": "/products/farine-de-mais.jpg",
+      "image": "https://images.unsplash.com/photo-1568347877321-f8935c7dc5a3?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-04-02"
@@ -823,7 +823,7 @@
         "national",
         "frais"
       ],
-      "image": "/products/feuilles-de-ndole.jpg",
+      "image": "https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=800&q=75",
       "featured": true,
       "isNew": false,
       "createdAt": "2026-06-12"
@@ -849,7 +849,7 @@
         "acidulé",
         "boisson"
       ],
-      "image": "/products/citrons-verts.jpg",
+      "image": "https://images.unsplash.com/photo-1590502593747-42a996133562?auto=format&fit=crop&w=800&q=75",
       "featured": false,
       "isNew": false,
       "createdAt": "2026-05-18"

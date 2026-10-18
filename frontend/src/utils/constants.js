@@ -46,19 +46,26 @@ export const PAYMENT_METHODS = [
   {
     value: 'mtn_momo',
     label: 'MTN Mobile Money',
-    description: 'Paiement mobile MTN MoMo (bientôt disponible).',
+    description: 'Envoyez le montant au 679 12 60 18 (MTN MoMo).',
     icon: 'Smartphone',
-    // Structure prête pour une future intégration réelle
     provider: 'mtn',
+    // Numéro marchand qui reçoit les paiements
+    number: '679126018',
   },
   {
     value: 'orange_money',
     label: 'Orange Money',
-    description: 'Paiement mobile Orange Money (bientôt disponible).',
+    description: 'Envoyez le montant au 687 14 41 15 (Orange Money).',
     icon: 'Smartphone',
     provider: 'orange',
+    number: '687144115',
   },
 ]
+
+/** "679126018" → "679 12 60 18" */
+export function formatMobileNumber(n) {
+  return String(n || '').replace(/^(\d{3})(\d{2})(\d{2})(\d{2})$/, '$1 $2 $3 $4')
+}
 
 /* ---- Villes & zones de livraison (Cameroun) ---- */
 export const CITIES = [

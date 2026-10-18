@@ -24,6 +24,7 @@ import {
   ORDER_STATUS,
   ORDER_STATUS_LIST,
   PAYMENT_METHODS,
+  formatMobileNumber,
 } from "../utils/constants";
 
 const FLOW = [
@@ -185,6 +186,13 @@ export default function OrderDetail() {
               >
                 <Truck size={14} /> {payment?.label}
               </div>
+              {payment?.number && order.paymentStatus !== "paid" && (
+                <div className="ln" style={{ marginTop: 6 }}>
+                  Envoyez <strong>{formatPrice(order.total)}</strong> au{" "}
+                  <strong>{formatMobileNumber(payment.number)}</strong> (référence{" "}
+                  {order.reference}).
+                </div>
+              )}
             </div>
           </div>
 

@@ -108,8 +108,7 @@ export default function Footer() {
             © {new Date().getFullYear()} {settings.storeName}. Tous droits réservés.
           </span>
           <span>
-            Produits frais du terroir camerounais · Douala · Yaoundé ·{' '}
-            <Link to="/credits-photos">Crédits photos</Link>
+            Produits frais du terroir camerounais · Douala · Yaoundé
           </span>
         </div>
       </div>

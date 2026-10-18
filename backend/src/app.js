@@ -9,6 +9,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 import { env } from './config/env.js'
+import { pool } from './database/pool.js'
 import publicRoutes from './routes/publicRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import adminRoutes from './routes/adminRoutes.js'
@@ -34,8 +35,21 @@ export function createApp() {
   app.use(express.json({ limit: '1mb' }))
 
   /** Sonde de santé (uptime, monitoring, vérification du déploiement). */
-  app.get('/api/health', (_req, res) => {
-    res.json({ ok: true, service: 'kmermarket-api', time: new Date().toISOString() })
+  app.get('/api/health', async (_req, res) => {
+    // État de la base : uniquement un code (jamais l'URL ni le message brut).
+    let db = 'ok'
+    try {
+      await pool.query('SELECT 1 FROM categories LIMIT 1')
+    } catch (err) {
+      db = `error:${err.code || 'unknown'}`
+    }
+    res.json({
+      ok: true,
+      service: 'kmermarket-api',
+      db,
+      dbConfigured: Boolean(env.db.url),
+      time: new Date().toISOString(),
+    })
   })
 
   app.use('/api', publicRoutes)

@@ -1,6 +1,5 @@
 import { ShieldCheck } from 'lucide-react'
 import Logo from '../brand/Logo'
-import { Link } from 'react-router-dom'
 
 /** Mise en page commune aux écrans d'authentification. */
 export default function AuthShell({ title, subtitle, children, footer }) {
@@ -26,9 +25,10 @@ export default function AuthShell({ title, subtitle, children, footer }) {
       </aside>
       <main className="mf-auth-main">
         <div className="mf-auth-card">
-          <Link to="/" style={{ display: 'inline-block', marginBottom: 24 }}>
+          {/* Logo du formulaire : seulement quand le panneau latéral est masqué (mobile) */}
+          <div className="mf-auth-card-logo">
             <Logo size={38} />
-          </Link>
+          </div>
           <h1>{title}</h1>
           <p className="sub">{subtitle}</p>
           {children}

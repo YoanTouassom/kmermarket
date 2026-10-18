@@ -20,6 +20,7 @@ import { Button, EmptyState, ConfirmDialog } from "../components/ui/primitives";
 import { formatPrice } from "../utils/format";
 import { FREE_DELIVERY_THRESHOLD } from "../utils/constants";
 import { useState } from "react";
+import { IMAGE_PLACEHOLDER, onImageError } from "../utils/images";
 
 export default function Cart() {
   const items = useCartStore((s) => s.items);
@@ -42,7 +43,7 @@ export default function Cart() {
 
   if (!items.length) {
     return (
-      <div className="container" style={{ padding: "30px 0 60px" }}>
+      <div className="container" style={{ paddingTop: 30, paddingBottom: 60 }}>
         <EmptyState
           icon={ShoppingBag}
           title="Votre panier est vide"
@@ -62,7 +63,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="container" style={{ padding: "26px 0 50px" }}>
+    <div className="container" style={{ paddingTop: 26, paddingBottom: 50 }}>
       <div className="mf-sec-head">
         <div>
           <span className="mf-eyebrow">Panier</span>
@@ -78,7 +79,7 @@ export default function Cart() {
           {items.map((item) => (
             <div key={item.productId} className="mf-cart-item">
               <Link to={`/product/${item.productId}`}>
-                <img src={item.image} alt={item.name} />
+                <img src={item.image || IMAGE_PLACEHOLDER} alt={item.name} onError={onImageError} />
               </Link>
               <div>
                 <Link to={`/product/${item.productId}`} className="nm">
@@ -120,7 +121,7 @@ export default function Cart() {
                   </button>
                 </div>
               </div>
-              <div style={{ textAlign: "right" }}>
+              <div className="mf-cart-price">
                 <div
                   className="price"
                   style={{

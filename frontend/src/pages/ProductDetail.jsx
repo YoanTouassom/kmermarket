@@ -26,6 +26,7 @@ import {
   Skeleton,
 } from "../components/ui/primitives";
 import { formatPrice, discountPercent } from "../utils/format";
+import { IMAGE_PLACEHOLDER, onImageError } from "../utils/images";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -62,7 +63,7 @@ export default function ProductDetail() {
 
   if (loading) {
     return (
-      <div className="container" style={{ padding: "40px 0" }}>
+      <div className="container" style={{ paddingTop: 40, paddingBottom: 40 }}>
         <div className="mf-pdp">
           <Skeleton height={460} radius={20} />
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -122,7 +123,7 @@ export default function ProductDetail() {
 
       <div className="mf-pdp">
         <div className="mf-pdp-media">
-          <img src={product.image} alt={product.name} />
+          <img src={product.image || IMAGE_PLACEHOLDER} alt={product.name} onError={onImageError} />
         </div>
 
         <div>

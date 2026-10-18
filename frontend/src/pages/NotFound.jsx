@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div
       className="container"
-      style={{ padding: "90px 0", textAlign: "center" }}
+      style={{ paddingTop: 90, paddingBottom: 90, textAlign: "center" }}
     >
       <span
         style={{

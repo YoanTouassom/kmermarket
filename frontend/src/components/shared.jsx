@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import ProductCard from './ProductCard'
 import { ProductSkeleton } from './ui/primitives'
 import { useCatalogStore } from '../store/catalogStore'
+import { IMAGE_PLACEHOLDER, onImageError } from '../utils/images'
 
 /** Titre de section réutilisable avec lien « voir tout ». */
 export function SectionHeading({ eyebrow, title, text, to, toLabel = 'Voir tout' }) {
@@ -26,7 +27,7 @@ export function SectionHeading({ eyebrow, title, text, to, toLabel = 'Voir tout'
 export function CategoryCard({ category, count }) {
   return (
     <Link to={`/shop?category=${category.id}`} className="mf-cat-card">
-      <img src={category.image} alt={category.name} loading="lazy" />
+      <img src={category.image || IMAGE_PLACEHOLDER} alt={category.name} loading="lazy" onError={onImageError} />
       <div className="mf-cat-card-body">
         <div className="nm">{category.name}</div>
         {typeof count === 'number' && (

@@ -20,6 +20,7 @@ import {
 } from "../components/ui/primitives";
 import OrderStatusBadge from "../components/OrderStatusBadge";
 import { formatPrice, formatDate } from "../utils/format";
+import { IMAGE_PLACEHOLDER, onImageError } from "../utils/images";
 import {
   ORDER_STATUS,
   ORDER_STATUS_LIST,
@@ -219,7 +220,8 @@ export default function OrderDetail() {
               style={{ display: "flex", gap: 14, alignItems: "center" }}
             >
               <img
-                src={it.image}
+                src={it.image || IMAGE_PLACEHOLDER}
+                onError={onImageError}
                 alt=""
                 style={{
                   width: 54,

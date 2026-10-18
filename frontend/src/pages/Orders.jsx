@@ -7,6 +7,7 @@ import { EmptyState, Button, Skeleton } from "../components/ui/primitives";
 import OrderStatusBadge from "../components/OrderStatusBadge";
 import { formatPrice, formatDate } from "../utils/format";
 import { ORDER_STATUS_LIST } from "../utils/constants";
+import { IMAGE_PLACEHOLDER, onImageError } from "../utils/images";
 
 export default function Orders() {
   const user = useAuthStore((s) => s.user);
@@ -97,7 +98,7 @@ export default function Orders() {
             <div key={o.id} className="mf-order-card">
               <div className="mf-order-thumbs">
                 {o.items.slice(0, 3).map((it, i) => (
-                  <img key={i} src={it.image} alt="" />
+                  <img key={i} src={it.image || IMAGE_PLACEHOLDER} alt="" onError={onImageError} />
                 ))}
                 {o.items.length > 3 && (
                   <span className="more">+{o.items.length - 3}</span>

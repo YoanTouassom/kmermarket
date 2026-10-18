@@ -60,7 +60,7 @@
     max-width: 300px;
   }
   .mf-hero-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 30px;
   }
   .mf-hero-media {
@@ -73,7 +73,7 @@
     right: 6px;
   }
   .mf-cart-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .mf-summary {
     position: static;
@@ -84,14 +84,44 @@
   .mf-account-nav {
     position: static;
   }
+  /* Espace client : menu en onglets défilants */
+  .mf-account-layout {
+    gap: 16px;
+  }
+  .mf-account-nav {
+    padding: 10px;
+  }
+  .mf-account-nav .user {
+    padding: 4px 4px 10px;
+    margin-bottom: 8px;
+  }
+  .mf-account-nav nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+  .mf-account-nav nav a,
+  .mf-account-nav .logout {
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: auto;
+    padding: 9px 12px;
+  }
+  /* Onglets de l'espace client : fondu à droite = « ça défile » */
+  .mf-account-nav nav {
+    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
+    mask-image: linear-gradient(to right, #000 85%, transparent);
+  }
+
   .mf-shop-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .mf-filters {
     position: static;
   }
   .mf-pdp {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 26px;
   }
   .mf-mobile-filter-btn {
@@ -101,7 +131,7 @@
     display: none;
   }
   .mf-band {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: 30px;
   }
   .mf-footer-top {
@@ -142,6 +172,129 @@
     font-size: 12px;
     padding: 6px 12px;
   }
+  /* Accueil : sections plus serrées */
+  .mf-section {
+    padding: 36px 0;
+  }
+  .mf-section.tight {
+    padding: 22px 0;
+  }
+  .mf-hero-cta .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+  .mf-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .mf-hero-stats .v {
+    font-size: 21px;
+  }
+  .mf-hero-stats .l {
+    font-size: 12px;
+  }
+  /* Avantages : icône à gauche, texte à droite */
+  .mf-values {
+    gap: 12px;
+  }
+  .mf-value {
+    display: grid;
+    grid-template-columns: 46px 1fr;
+    column-gap: 14px;
+    padding: 16px;
+  }
+  .mf-value .ic {
+    grid-row: 1 / span 2;
+    margin-bottom: 0;
+  }
+  /* Comment ça marche : numéro en haut à droite, carte compacte */
+  .mf-steps {
+    gap: 12px;
+  }
+  .mf-step {
+    padding: 16px 16px 16px 72px;
+    min-height: 0;
+  }
+  .mf-step .ic {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    margin: 0;
+  }
+  .mf-step .num {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 22px;
+  }
+  .mf-step h3 {
+    padding-right: 34px;
+  }
+  /* Avis clients : carrousel horizontal */
+  .mf-testi-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+  .mf-testi {
+    flex: 0 0 86%;
+    scroll-snap-align: start;
+    padding: 18px;
+  }
+  /* Pied de page : liens sur 2 colonnes */
+  .mf-footer-top {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 16px;
+    padding: 40px 0 28px;
+  }
+  .mf-footer-top > :first-child,
+  .mf-footer-top > :last-child {
+    grid-column: 1 / -1;
+  }
+  /* Carte commande sur 3 lignes : vignettes + statut / réf + date / total + bouton */
+  .mf-order-card {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'thumbs status'
+      'meta meta'
+      'total action';
+    gap: 10px 12px;
+    padding: 14px;
+  }
+  .mf-order-card .mf-order-status {
+    justify-self: end;
+  }
+  .mf-order-thumbs img,
+  .mf-order-thumbs .more {
+    width: 46px;
+    height: 46px;
+  }
+  /* Étapes de commande : 3 colonnes égales, numéro au-dessus du libellé */
+  .mf-steps-bar {
+    flex-wrap: nowrap;
+    gap: 4px;
+    margin-bottom: 20px;
+  }
+  .mf-steps-bar > div {
+    flex: 1 1 0 !important;
+    min-width: 0;
+    gap: 4px !important;
+  }
+  .mf-steps-bar .s {
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    text-align: center;
+    flex: 1;
+  }
+  .mf-steps-bar .line {
+    display: none;
+  }
   /* Cartes produit en 2 colonnes étroites */
   .mf-pcard-body {
     padding: 11px 11px 12px;
@@ -171,42 +324,19 @@
   .mf-band {
     padding: 22px 18px;
   }
+  .mf-band .btn {
+    white-space: normal;
+    text-align: center;
+  }
   .mf-panel-head {
     padding: 14px;
   }
   .mf-panel-body {
     padding: 12px;
   }
-  /* Espace client : menu en onglets défilants */
-  .mf-account-layout {
-    gap: 16px;
-  }
-  .mf-account-nav {
-    padding: 10px;
-  }
-  .mf-account-nav .user {
-    padding: 4px 4px 10px;
-    margin-bottom: 8px;
-  }
-  .mf-account-nav nav {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 4px;
-    scrollbar-width: none;
-  }
-  .mf-account-nav nav a,
-  .mf-account-nav .logout {
-    white-space: nowrap;
-    flex-shrink: 0;
-    width: auto;
-    padding: 9px 12px;
-  }
   .mf-band-list,
   .mf-band-item {
     min-width: 0;
-  }
-  .mf-footer-top {
-    grid-template-columns: 1fr;
   }
   .mf-hero-float {
     display: none;
@@ -219,8 +349,21 @@
     width: 76px;
     height: 76px;
   }
-  .mf-cart-item .mf-cart-actions {
+  .mf-cart-item {
+    padding: 12px;
+    align-items: start;
+  }
+  /* Prix de la ligne sous le nom et les boutons, aligné avec eux */
+  .mf-cart-item .mf-cart-price {
     grid-column: 2;
+    text-align: left;
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .mf-cart-item .mf-cart-price .price {
+    font-size: 16.5px !important;
   }
   .mf-toasts {
     left: 12px;
@@ -236,6 +379,9 @@
   }
   .mf-auth-aside {
     display: none;
+  }
+  .mf-auth-card-logo {
+    display: block;
   }
   .mf-order-head {
     flex-direction: column;

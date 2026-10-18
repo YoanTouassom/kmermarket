@@ -30,6 +30,7 @@ import {
 } from "../components/ui/primitives";
 import { formatPrice } from "../utils/format";
 import { CITIES, PAYMENT_METHODS, formatMobileNumber } from "../utils/constants";
+import { IMAGE_PLACEHOLDER, onImageError } from "../utils/images";
 
 const STEPS = ["Informations", "Livraison", "Paiement"];
 
@@ -121,7 +122,7 @@ export default function Checkout() {
 
   if (!items.length && !placed) {
     return (
-      <div className="container" style={{ padding: "30px 0 60px" }}>
+      <div className="container" style={{ paddingTop: 30, paddingBottom: 60 }}>
         <EmptyState
           icon={ShoppingBag}
           title="Aucun article à commander"
@@ -140,7 +141,7 @@ export default function Checkout() {
     return (
       <div
         className="container"
-        style={{ padding: "40px 0 70px", maxWidth: 720 }}
+        style={{ paddingTop: 40, paddingBottom: 70, maxWidth: 720 }}
       >
         <div className="mf-panel">
           <div
@@ -237,7 +238,7 @@ export default function Checkout() {
   }
 
   return (
-    <div className="container" style={{ padding: "26px 0 50px" }}>
+    <div className="container" style={{ paddingTop: 26, paddingBottom: 50 }}>
       <div className="mf-sec-head">
         <div>
           <span className="mf-eyebrow">Commande</span>
@@ -445,7 +446,8 @@ export default function Checkout() {
                 style={{ display: "flex", gap: 12, alignItems: "center" }}
               >
                 <img
-                  src={i.image}
+                  src={i.image || IMAGE_PLACEHOLDER}
+                  onError={onImageError}
                   alt=""
                   style={{
                     width: 48,
@@ -502,8 +504,8 @@ export default function Checkout() {
               gap: 8,
             }}
           >
-            <Smartphone size={14} /> Aucun paiement en ligne — architecture
-            prête pour Mobile Money.
+            <Smartphone size={14} style={{ flexShrink: 0 }} /> Paiement à la
+            livraison, par MTN Mobile Money ou Orange Money.
           </div>
         </aside>
       </div>

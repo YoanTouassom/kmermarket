@@ -292,8 +292,8 @@ export default function Home() {
           <div className="mf-testi-grid">
             {testimonials.map((t) => (
               <figure key={t.id} className="mf-testi">
-                <StarRating value={5} />
-                <blockquote className="quote">“{t.quote}”</blockquote>
+                <StarRating value={t.rating || 5} />
+                <blockquote className="quote">“{t.text || t.quote}”</blockquote>
                 <figcaption className="mf-testi-author">
                   <img src={t.avatar} alt={t.name} />
                   <div>

@@ -4,6 +4,7 @@ import { formatPrice, discountPercent } from '../utils/format'
 import { Badge, StarRating } from './ui/primitives'
 import { useCartStore } from '../store/cartStore'
 import { useUIStore } from '../store/uiStore'
+import { IMAGE_PLACEHOLDER, onImageError } from '../utils/images'
 
 /**
  * Carte produit réutilisable (accueil, boutique, résultats, similaires).
@@ -28,7 +29,7 @@ export default function ProductCard({ product, compact = false }) {
   return (
     <article className={`mf-pcard ${compact ? 'compact' : ''}`}>
       <Link to={`/product/${product.id}`} className="mf-pcard-media">
-        <img src={product.image} alt={product.name} loading="lazy" />
+        <img src={product.image || IMAGE_PLACEHOLDER} alt={product.name} loading="lazy" onError={onImageError} />
         <div className="mf-pcard-tags">
           {discount > 0 && <Badge tone="orange">-{discount}%</Badge>}
           {product.isNew && <Badge tone="green">Nouveau</Badge>}

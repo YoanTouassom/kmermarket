@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { Link } from "react-router-dom";
 
 /**
@@ -6,6 +7,9 @@ import { Link } from "react-router-dom";
  * Décliné en : marque seule (mark), lockup complet (avec texte), et variante claire.
  */
 export function LogoMark({ size = 40 }) {
+  // Id unique par instance : un logo masqué (display:none) ne doit pas
+  // « emporter » le dégradé des autres logos de la page.
+  const gradId = `mfPin-${useId().replace(/:/g, "")}`;
   return (
     <svg
       width={size}
@@ -15,14 +19,14 @@ export function LogoMark({ size = 40 }) {
       aria-label="KmerMarket"
     >
       <defs>
-        <linearGradient id="mfPin" x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stopColor="#2E9E6B" />
           <stop offset="1" stopColor="#0F4D33" />
         </linearGradient>
       </defs>
       <path
         d="M24 3.5c-7.9 0-14.3 6.2-14.3 13.8 0 10 14.3 27.2 14.3 27.2s14.3-17.2 14.3-27.2C38.3 9.7 31.9 3.5 24 3.5z"
-        fill="url(#mfPin)"
+        fill={`url(#${gradId})`}
       />
       <circle cx="24" cy="17.4" r="8.4" fill="#ffffff" />
       <path

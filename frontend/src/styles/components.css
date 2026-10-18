@@ -854,6 +854,13 @@
   font-size: 13px;
   color: var(--ink-500);
 }
+.mf-cart-item > * {
+  min-width: 0;
+}
+.mf-cart-price {
+  text-align: right;
+  white-space: nowrap;
+}
 .mf-qty {
   display: inline-flex;
   align-items: center;
@@ -910,9 +917,15 @@
 
 /* ---------------- Forms / auth ---------------- */
 .mf-auth-wrap {
-  min-height: calc(100vh - var(--nav-h));
+  /* Pages sans barre de navigation : toute la hauteur de l'écran */
+  min-height: 100vh;
+  min-height: 100dvh;
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+.mf-auth-card-logo {
+  display: none;
+  margin-bottom: 24px;
 }
 .mf-auth-aside {
   background: linear-gradient(
@@ -1711,4 +1724,238 @@
   padding: 4px 12px;
   border-radius: var(--r-full);
   font-weight: 600;
+}
+
+/* ================================================================
+   Styles des composants qui n'en avaient pas (pages client)
+   ================================================================ */
+
+/* Bouton clair sur fond coloré (bandeau livraison, appel à l'action) */
+.btn-light {
+  background: #fff;
+  color: var(--green-800);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+.btn-light:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+}
+
+/* Filtres en pastilles (Mes commandes) */
+.mf-chip-row {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  margin: 4px 0 18px;
+  scrollbar-width: none;
+}
+.mf-chip {
+  padding: 8px 14px;
+  border-radius: var(--r-full);
+  border: 1.5px solid var(--ink-200);
+  background: #fff;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ink-700);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all var(--t-fast);
+}
+.mf-chip:hover {
+  border-color: var(--green-400);
+  color: var(--green-700);
+}
+.mf-chip.active {
+  background: var(--green-600);
+  border-color: var(--green-600);
+  color: #fff;
+}
+
+/* Carte commande : une ligne sur grand écran */
+.mf-order-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto;
+  grid-template-areas: 'thumbs meta status total action';
+  align-items: center;
+  gap: 16px;
+}
+.mf-order-card .mf-order-thumbs { grid-area: thumbs; }
+.mf-order-card .mf-order-meta { grid-area: meta; min-width: 0; }
+.mf-order-card .mf-order-status { grid-area: status; }
+.mf-order-card .mf-order-total { grid-area: total; }
+.mf-order-card > .btn { grid-area: action; }
+.mf-order-thumbs .more {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--ink-100);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--ink-600);
+}
+.mf-order-meta .ref {
+  font-family: var(--font-display);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+.mf-order-meta .date {
+  font-size: 13px;
+  color: var(--ink-500);
+}
+.mf-order-total {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  white-space: nowrap;
+}
+
+/* Suivi de commande (étapes verticales reliées) */
+.mf-tl-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 12px;
+  padding-bottom: 16px;
+}
+.mf-tl-step::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: 26px;
+  bottom: 2px;
+  width: 2px;
+  background: var(--ink-200);
+}
+.mf-tl-step:last-child {
+  padding-bottom: 0;
+}
+.mf-tl-step:last-child::before {
+  display: none;
+}
+.mf-tl-step.done::before {
+  background: var(--green-300);
+}
+.mf-tl-step .dot {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--r-full);
+  background: #fff;
+  color: var(--ink-300);
+}
+.mf-tl-step.done .dot {
+  color: var(--green-600);
+}
+.mf-tl-step .lb {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--ink-400);
+  line-height: 26px;
+}
+.mf-tl-step.done .lb {
+  color: var(--ink-900);
+}
+.mf-tl-step.current .lb {
+  color: var(--green-700);
+}
+.mf-tl-step .at {
+  font-size: 12.5px;
+  color: var(--ink-500);
+}
+.mf-cancelled-band {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #fdecea;
+  color: var(--danger);
+  font-weight: 600;
+}
+
+/* Blocs d'information (livraison, contact, paiement) */
+.mf-order-grid2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 20px;
+}
+.mf-info-block {
+  background: var(--cream);
+  border: 1px solid var(--ink-200);
+  border-radius: 12px;
+  padding: 14px 16px;
+  min-width: 0;
+}
+.mf-info-block .tt {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--ink-900);
+  margin-bottom: 6px;
+}
+.mf-info-block .ln {
+  font-size: 13.5px;
+  color: var(--ink-600);
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+/* Adresses enregistrées */
+.mf-address-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+.mf-address-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--ink-200);
+  border-radius: 12px;
+  background: #fff;
+  min-width: 0;
+}
+.mf-address-card .ic {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--green-50);
+  color: var(--green-700);
+}
+.mf-address-card .ic.office {
+  background: var(--orange-50);
+  color: var(--orange-600);
+}
+.mf-address-card .nm {
+  font-weight: 700;
+}
+.mf-address-card .ad {
+  font-size: 13px;
+  color: var(--ink-500);
+  overflow-wrap: anywhere;
+}
+
+/* Badge de rôle (Mon profil) */
+.mf-role-badge {
+  padding: 4px 11px;
+  border-radius: var(--r-full);
+  background: var(--green-50);
+  color: var(--green-700);
+  font-size: 12.5px;
+  font-weight: 700;
 }

@@ -18,6 +18,7 @@ import { useUIStore } from '../../store/uiStore'
 import { productService } from '../../services/productService'
 import { formatPrice } from '../../utils/format'
 import { siteContent } from '../../data/content'
+import { IMAGE_PLACEHOLDER, onImageError } from '../../utils/images'
 
 const NAV = [
   { to: '/', label: 'Accueil', end: true },
@@ -135,7 +136,7 @@ export default function Navbar() {
                       setSuggestions([])
                     }}
                   >
-                    <img src={p.image} alt="" />
+                    <img src={p.image || IMAGE_PLACEHOLDER} alt="" onError={onImageError} />
                     <span style={{ flex: 1 }}>
                       <span className="nm">{p.name}</span>
                     </span>

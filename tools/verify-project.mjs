@@ -28,7 +28,7 @@ console.log('📁 Fichiers requis :')
 const required = [
   'package.json',
   'vercel.json',
-  'api/index.js',
+  'backend/index.js',
   'DEPLOY.md',
   '.env.production.example',
   'backend/package.json',

@@ -36,8 +36,9 @@ npm run db:seed
 ## 2. Projet Vercel (10 min)
 
 1. Sur https://vercel.com → **Add New → Project** → importez `kmermarket`.
-2. **Root Directory** : laissez la **racine du dépôt** (`./`), ne choisissez pas `frontend`.
-   Install, build, dossier de sortie et routes sont lus depuis `vercel.json`.
+2. Vercel affiche « Multiple applications detected » avec `backend` (Express, `/api`) et
+   `frontend` (Vite, `/`). **Ne cliquez pas** sur « Import single project » : choisissez de les
+   **regrouper en un seul projet (Services)**. La configuration est lue depuis `vercel.json`.
 3. **Environment Variables** :
 
 ```
@@ -52,9 +53,8 @@ JWT_EXPIRES_IN=7d
 
 4. **Deploy** (~2 min) → vous obtenez par ex. `https://kmermarket.vercel.app`.
 
-> Si vous aviez déjà créé un projet Vercel avec Root Directory `frontend` :
-> Settings → General → **Root Directory** → videz le champ → Save, ajoutez les variables
-> ci-dessus, puis **Deployments → Redeploy**. Supprimez la variable `VITE_API_URL` si elle existe.
+> Si vous aviez déjà créé un projet Vercel pour `frontend` seul : supprimez-le
+> (Settings → General → Delete Project) puis réimportez comme ci-dessus.
 
 ## 3. Checklist finale
 
@@ -68,7 +68,7 @@ JWT_EXPIRES_IN=7d
 
 | Symptôme | Cause probable | Solution |
 |---|---|---|
-| `/api/health` → 404 Vercel | Root Directory = `frontend` | Videz le Root Directory, Redeploy |
+| `/api/health` → 404 Vercel | Projet importé avec un seul dossier | Réimportez en regroupant les services |
 | `/api/...` → 500 | Variable manquante ou `DATABASE_URL` erronée | Vercel → Deployments → (dernier) → **Logs** |
 | Logs : `Variable d'environnement manquante : JWT_SECRET` | Variable absente | Ajoutez-la puis Redeploy |
 | Boutique vide / erreur `relation ... does not exist` | Base non initialisée | Refaites l'étape 1.3 |
@@ -78,8 +78,8 @@ JWT_EXPIRES_IN=7d
 
 | Fichier | Rôle |
 |---|---|
-| `vercel.json` | Install, build, région `fra1`, routes `/api` → API et reste → SPA |
-| `api/index.js` | Fonction serverless qui expose l'app Express |
+| `vercel.json` | Services `backend` + `frontend`, région `fra1`, routes `/api` → API et reste → SPA |
+| `backend/index.js` | Point d'entrée Express détecté par Vercel |
 | `backend/Dockerfile` | Image Docker de l'API (hébergeur Docker, optionnel) |
 | `.env.production.example` | Variables de production |
 | `npm run verify` | Vérifie la cohérence du projet avant déploiement |

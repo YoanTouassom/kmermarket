@@ -282,6 +282,32 @@ export async function listAll(filters = {}) {
   return Promise.all(rows.map(hydrate))
 }
 
+/**
+ * Flux léger des nouvelles commandes (notifications admin, interrogé souvent).
+ * Renvoie les commandes d'id > afterId et le dernier id connu.
+ */
+export async function listNewSince(afterId = 0, limit = 20) {
+  const { rows } = await query(
+    `SELECT id, order_number, customer_first_name, customer_last_name, total,
+            city, payment_method, created_at
+     FROM orders WHERE id > $1 ORDER BY id DESC LIMIT $2`,
+    [afterId, limit]
+  )
+  const { rows: last } = await query('SELECT COALESCE(MAX(id), 0) AS id FROM orders')
+  return {
+    latestId: String(last[0].id),
+    orders: rows.map((r) => ({
+      id: String(r.id),
+      reference: r.order_number,
+      customerName: `${r.customer_first_name} ${r.customer_last_name}`.trim(),
+      total: Number(r.total),
+      city: r.city,
+      paymentMethod: r.payment_method,
+      createdAt: r.created_at,
+    })),
+  }
+}
+
 /** Change le statut d'une commande (annuler remet le stock en vente). */
 export async function updateStatus(id, status) {
   const numeric = toInt(id)

@@ -30,6 +30,8 @@ router.use(authenticate, requireAdmin)
 /* ---------------------------- Vue d'ensemble ---------------------------- */
 
 router.get('/orders/stats', order.stats)
+// Avant /orders/:id : sinon « feed » serait lu comme un id.
+router.get('/orders/feed', order.newOrdersFeed)
 
 /* ------------------------------ Commandes ------------------------------ */
 

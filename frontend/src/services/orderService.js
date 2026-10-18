@@ -79,6 +79,11 @@ export const orderService = {
   async stats() {
     return api.get('/admin/orders/stats')
   },
+
+  /** Nouvelles commandes d'id > after (notifications admin). */
+  async feed(after = 0) {
+    return api.get(`/admin/orders/feed?after=${encodeURIComponent(after)}`)
+  },
 }
 
 export function formatOrderRef(n) {

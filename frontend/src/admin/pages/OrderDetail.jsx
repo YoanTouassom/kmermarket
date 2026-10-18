@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { ArrowLeft, MapPin, Phone, Package, Truck, XCircle } from 'lucide-react'
 import { orderService } from '../../services/orderService'
 import { useUIStore } from '../../store/uiStore'
+import { useOrderNotifStore } from '../../store/orderNotifStore'
 import OrderStatusBadge from '../../components/OrderStatusBadge'
 import { Button, Select, Field, EmptyState, Spinner, ConfirmDialog } from '../../components/ui/primitives'
 import { formatPrice, formatDate } from '../../utils/format'
@@ -10,6 +11,8 @@ import { ORDER_STATUS_LIST, ORDER_STATUS } from '../../utils/constants'
 
 export default function AdminOrderDetail() {
   const { id } = useParams()
+  const markRead = useOrderNotifStore((s) => s.markRead)
+  useEffect(() => { markRead(String(id)) }, [id, markRead])
   const navigate = useNavigate()
   const success = useUIStore((s) => s.success)
   const error = useUIStore((s) => s.error)

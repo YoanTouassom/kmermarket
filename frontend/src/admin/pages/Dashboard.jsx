@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Wallet, ShoppingCart, Users, Package, AlertTriangle, PackageX, ArrowRight, ArrowUpRight, RefreshCw } from 'lucide-react'
 import { orderService } from '../../services/orderService'
 import { useCatalogStore } from '../../store/catalogStore'
+import { useOrderNotifStore } from '../../store/orderNotifStore'
 import OrderStatusBadge from '../../components/OrderStatusBadge'
 import { Skeleton, Button } from '../../components/ui/primitives'
 import { formatPrice, formatNumber, timeAgo } from '../../utils/format'
@@ -38,9 +39,12 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  const fetchStats = async () => {
+  const notifVersion = useOrderNotifStore((s) => s.version)
+
+  // silent : rafraîchissement en arrière-plan (sans squelette de chargement)
+  const fetchStats = async (silent = false) => {
     setError('')
-    setLoading(true)
+    if (!silent) setLoading(true)
     try {
       setStats(await orderService.stats())
     } catch (err) {
@@ -55,6 +59,12 @@ export default function Dashboard() {
     fetchStats()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loadCatalog])
+
+  // Nouvelle commande reçue : chiffres et dernières commandes à jour.
+  useEffect(() => {
+    if (notifVersion) fetchStats(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [notifVersion])
 
   if (loading) {
     return (
@@ -74,7 +84,7 @@ export default function Dashboard() {
             {error || 'Aucune donnée reçue du serveur.'} Vérifiez que le backend est démarré
             (<code>npm run dev</code> dans <code>backend</code>) puis réessayez.
           </p>
-          <Button variant="primary" icon={RefreshCw} onClick={fetchStats}>Réessayer</Button>
+          <Button variant="primary" icon={RefreshCw} onClick={() => fetchStats()}>Réessayer</Button>
         </div>
       </div>
     )

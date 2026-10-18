@@ -17,6 +17,9 @@ import {
 import Logo from '../../components/brand/Logo'
 import { useAuthStore } from '../../store/authStore'
 import { initials } from '../../utils/format'
+import { useOrderNotifStore } from '../../store/orderNotifStore'
+import { useOrderNotifications } from '../hooks/useOrderNotifications'
+import OrderBell from './OrderBell'
 
 const NAV_GROUPS = [
   {
@@ -50,6 +53,8 @@ export default function AdminLayout() {
   const [open, setOpen] = useState(false)
   const user = useAuthStore((s) => s.user)
   const logout = useAuthStore((s) => s.logout)
+  const unreadOrders = useOrderNotifStore((s) => s.unread.length)
+  useOrderNotifications()
 
   return (
     <div className="mf-admin">
@@ -64,6 +69,9 @@ export default function AdminLayout() {
               {g.items.map((it) => (
                 <NavLink key={it.to} to={it.to} end={it.end} onClick={() => setOpen(false)}>
                   <it.icon size={18} /> {it.label}
+                  {it.to === '/admin/orders' && unreadOrders > 0 && (
+                    <span className="mf-admin-nav-badge">{unreadOrders}</span>
+                  )}
                 </NavLink>
               ))}
             </div>
@@ -108,6 +116,7 @@ export default function AdminLayout() {
             </div>
           </div>
           <span className="spacer" />
+          <OrderBell />
         </header>
 
         <div className="mf-admin-content">

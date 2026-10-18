@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Eye, ShoppingCart } from 'lucide-react'
 import { orderService } from '../../services/orderService'
 import { useUIStore } from '../../store/uiStore'
+import { useOrderNotifStore } from '../../store/orderNotifStore'
 import AdminToolbar from '../components/AdminToolbar'
 import OrderStatusBadge from '../../components/OrderStatusBadge'
 import { Select, EmptyState, Spinner, Pagination } from '../../components/ui/primitives'
@@ -18,6 +19,8 @@ export default function AdminOrders() {
   const [status, setStatus] = useState('')
   const [page, setPage] = useState(1)
   const error = useUIStore((s) => s.error)
+  // Nouvelle commande reçue (notifications) : on recharge la liste.
+  const notifVersion = useOrderNotifStore((s) => s.version)
 
   useEffect(() => {
     let active = true
@@ -29,7 +32,7 @@ export default function AdminOrders() {
       } catch (e) { error(e.message) } finally { if (active) setLoading(false) }
     })()
     return () => { active = false }
-  }, [search, status, error])
+  }, [search, status, error, notifVersion])
 
   const totalPages = Math.ceil(orders.length / PER_PAGE)
   const view = orders.slice((page - 1) * PER_PAGE, page * PER_PAGE)

@@ -36,6 +36,12 @@ export const adminOrders = asyncHandler(async (_req, res) => {
   res.json(orders)
 })
 
+export const newOrdersFeed = asyncHandler(async (req, res) => {
+  const after = Math.max(0, Number.parseInt(req.query.after, 10) || 0)
+  res.set('Cache-Control', 'no-store')
+  res.json(await orderService.listNewSince(after))
+})
+
 export const adminOrderById = asyncHandler(async (req, res) => {
   const order = await orderService.findById(toId(req.params.id))
   res.json(order)

@@ -22,6 +22,8 @@ import OrderDetail from "./pages/OrderDetail";
 import Profile from "./pages/account/Profile";
 import Addresses from "./pages/account/Addresses";
 import Preferences from "./pages/account/Preferences";
+import Favorites from "./pages/account/Favorites";
+import PhotoCredits from "./pages/PhotoCredits";
 import NotFound from "./pages/NotFound";
 
 import Dashboard from "./admin/pages/Dashboard";
@@ -99,6 +101,7 @@ export default function App() {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/credits-photos" element={<PhotoCredits />} />
 
         <Route
           path="/account"
@@ -111,6 +114,7 @@ export default function App() {
           <Route index element={<Profile />} />
           <Route path="addresses" element={<Addresses />} />
           <Route path="preferences" element={<Preferences />} />
+          <Route path="favorites" element={<Favorites />} />
         </Route>
         <Route
           path="/orders"

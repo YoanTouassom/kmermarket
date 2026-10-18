@@ -1092,6 +1092,7 @@
   border-radius: var(--r-lg);
   padding: 14px;
   position: sticky;
+  min-width: 0;
   top: calc(var(--nav-h) + 20px);
 }
 .mf-account-nav .user {
@@ -1131,6 +1132,41 @@
 .mf-account-nav a.active {
   background: var(--green-50);
   color: var(--green-700);
+}
+.mf-account-nav .mf-avatar {
+  flex-shrink: 0;
+}
+.mf-account-nav .nm {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
+.mf-account-nav .em {
+  font-size: 12.5px;
+  color: var(--ink-500);
+  overflow-wrap: anywhere;
+}
+.mf-account-nav nav {
+  display: flex;
+  flex-direction: column;
+}
+.mf-account-nav .logout {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 11px 12px;
+  border-radius: var(--r-md);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--danger);
+  text-align: left;
+}
+.mf-account-nav .logout:hover {
+  background: var(--ink-100);
+}
+.mf-account-content {
+  min-width: 0;
 }
 
 .mf-order-card {

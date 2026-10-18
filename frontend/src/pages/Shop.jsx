@@ -34,7 +34,16 @@ export default function Shop() {
   const [searchInput, setSearchInput] = useState(params.get("q") || "");
 
   const search = params.get("q") || "";
-  const categoryId = params.get("category") || "";
+  // ?category= accepte un id ("1") ou un slug ("fruits", "cat-fruits").
+  // null = slug pas encore résolu (catégories en cours de chargement).
+  const rawCategory = params.get("category") || "";
+  const categoryId = useMemo(() => {
+    if (!rawCategory || /^\d+$/.test(rawCategory)) return rawCategory;
+    const slug = rawCategory.replace(/^cat-/, "");
+    const match = categories.find((c) => c.slug === slug);
+    if (match) return match.id;
+    return categories.length ? "" : null;
+  }, [rawCategory, categories]);
   const sort = params.get("sort") || "popular";
   const promoOnly = params.get("promo") === "1";
   const featuredOnly = params.get("featured") === "1";
@@ -80,6 +89,7 @@ export default function Shop() {
   useEffect(() => {
     let active = true;
     setLoading(true);
+    if (categoryId === null) return;
     (async () => {
       // Tri + filtres gérés côté serveur (PostgreSQL).
       const res = await productService.list({

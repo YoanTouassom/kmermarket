@@ -1,11 +1,12 @@
 import { NavLink, Outlet, Link } from 'react-router-dom'
-import { User, Package, MapPin, Settings, LogOut, LayoutDashboard } from 'lucide-react'
+import { User, Package, MapPin, Heart, Settings, LogOut, LayoutDashboard } from 'lucide-react'
 import { useAuthStore } from '../../store/authStore'
 import { initials } from '../../utils/format'
 
 const NAV = [
   { to: '/account', label: 'Mon profil', icon: User, end: true },
   { to: '/orders', label: 'Mes commandes', icon: Package },
+  { to: '/account/favorites', label: 'Mes favoris', icon: Heart },
   { to: '/account/addresses', label: 'Mes adresses', icon: MapPin },
   { to: '/account/preferences', label: 'Préférences', icon: Settings },
 ]
@@ -16,12 +17,12 @@ export default function AccountLayout() {
   const logout = useAuthStore((s) => s.logout)
 
   return (
-    <div className="container" style={{ padding: '30px 0 50px' }}>
+    <div className="container" style={{ paddingTop: 30, paddingBottom: 50 }}>
       <div className="mf-account-layout">
-        <aside className="mf-account-side">
-          <div className="mf-account-user">
-            <span className="av">{initials(user?.firstName ? `${user.firstName} ${user.lastName}` : user?.name)}</span>
-            <div>
+        <aside className="mf-account-nav">
+          <div className="user">
+            <span className="mf-avatar">{initials(user?.firstName ? `${user.firstName} ${user.lastName}` : user?.name)}</span>
+            <div style={{ minWidth: 0 }}>
               <div className="nm">{user?.firstName ? `${user.firstName} ${user.lastName}` : user?.name}</div>
               <div className="em">{user?.email}</div>
             </div>

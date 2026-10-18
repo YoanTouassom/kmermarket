@@ -177,8 +177,15 @@
 }
 .mf-search-inline .input {
   border: none;
-  padding: 10px 0;
+  /* gauche : place pour la loupe positionnée en absolu (sections.css) */
+  padding: 10px 0 10px 22px;
   background: transparent;
+  flex: 1;
+  min-width: 0;
+}
+/* Dans le panneau de filtres de la boutique, le champ suit la largeur du panneau */
+.mf-filters .mf-search-inline {
+  min-width: 0;
 }
 .mf-search-inline .input:focus {
   outline: none;

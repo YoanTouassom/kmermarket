@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import {
   Search,
   ShoppingCart,
@@ -14,6 +14,7 @@ import {
 import Logo from '../brand/Logo'
 import { useCartCount } from '../../store/cartStore'
 import { useAuthStore } from '../../store/authStore'
+import { useUIStore } from '../../store/uiStore'
 import { productService } from '../../services/productService'
 import { formatPrice } from '../../utils/format'
 import { siteContent } from '../../data/content'
@@ -21,16 +22,27 @@ import { siteContent } from '../../data/content'
 const NAV = [
   { to: '/', label: 'Accueil', end: true },
   { to: '/shop', label: 'Boutique' },
-  { to: '/shop?category=cat-fruits', label: 'Fruits' },
-  { to: '/shop?category=cat-legumes', label: 'Légumes' },
-  { to: '/shop?category=cat-tubercules', label: 'Tubercules' },
+  { to: '/shop?category=fruits', label: 'Fruits' },
+  { to: '/shop?category=legumes', label: 'Légumes' },
+  { to: '/shop?category=tubercules', label: 'Tubercules' },
 ]
+
+/** NavLink ignore la query : on compare aussi ?category= pour n'activer qu'un lien. */
+function isNavActive(item, location) {
+  const [path, query = ''] = item.to.split('?')
+  if (path === '/') return location.pathname === '/'
+  if (location.pathname !== path) return false
+  const current = new URLSearchParams(location.search).get('category') || ''
+  return (new URLSearchParams(query).get('category') || '') === current
+}
 
 export default function Navbar() {
   const count = useCartCount()
+  const favCount = useUIStore((s) => s.favorites.length)
   const user = useAuthStore((s) => s.user)
   const logout = useAuthStore((s) => s.logout)
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [userMenu, setUserMenu] = useState(false)
@@ -94,7 +106,7 @@ export default function Navbar() {
           <Logo size={38} />
           <nav className="mf-nav">
             {NAV.map((n) => (
-              <NavLink key={n.to} to={n.to} end={n.end} onClick={closeAll}>
+              <NavLink key={n.to} to={n.to} onClick={closeAll} className={() => (isNavActive(n, location) ? 'active' : '')}>
                 {n.label}
               </NavLink>
             ))}
@@ -135,8 +147,9 @@ export default function Navbar() {
           </div>
 
           <div className="mf-header-actions">
-            <Link to="/account/favorites" className="mf-icon-btn" aria-label="Favoris">
+            <Link to="/account/favorites" className="mf-icon-btn mf-fav-btn" aria-label="Favoris">
               <Heart size={20} />
+              {favCount > 0 && <span className="mf-badge-count">{favCount}</span>}
             </Link>
 
             {user ? (
@@ -151,7 +164,7 @@ export default function Navbar() {
                 {userMenu && (
                   <div className="mf-dropdown">
                     <div className="mf-dropdown-head">
-                      <strong>{user.name}</strong>
+                      <strong>{user.firstName ? `${user.firstName} ${user.lastName || ''}` : user.name}</strong>
                       <span>{user.email}</span>
                     </div>
                     <Link to="/account" onClick={() => setUserMenu(false)}>
@@ -159,6 +172,9 @@ export default function Navbar() {
                     </Link>
                     <Link to="/orders" onClick={() => setUserMenu(false)}>
                       <Package size={16} /> Mes commandes
+                    </Link>
+                    <Link to="/account/favorites" onClick={() => setUserMenu(false)}>
+                      <Heart size={16} /> Mes favoris
                     </Link>
                     {user.role === 'admin' && (
                       <Link to="/admin" onClick={() => setUserMenu(false)}>
@@ -209,12 +225,15 @@ export default function Navbar() {
             </button>
           </div>
           {NAV.map((n) => (
-            <NavLink key={n.to} to={n.to} end={n.end} onClick={closeAll}>
+            <NavLink key={n.to} to={n.to} onClick={closeAll} className={() => (isNavActive(n, location) ? 'active' : '')}>
               {n.label}
             </NavLink>
           ))}
           <NavLink to="/cart" onClick={closeAll}>
             Panier ({count})
+          </NavLink>
+          <NavLink to="/account/favorites" onClick={closeAll}>
+            Favoris ({favCount})
           </NavLink>
           <hr className="divider" style={{ margin: '10px 0' }} />
           {user ? (

@@ -79,7 +79,7 @@
     position: static;
   }
   .mf-account-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
   .mf-account-nav {
     position: static;
@@ -113,6 +113,97 @@
 @media (max-width: 640px) {
   .mf-hide-sm {
     display: none;
+  }
+  /* En-tête sur deux lignes : logo + icônes, puis recherche pleine largeur */
+  .mf-header-inner {
+    flex-wrap: wrap;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 8px 6px;
+  }
+  .mf-header-search {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: none;
+  }
+  .mf-header-search input {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+  .mf-header-actions {
+    gap: 2px;
+  }
+  .mf-icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+  .mf-announce {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  /* Cartes produit en 2 colonnes étroites */
+  .mf-pcard-body {
+    padding: 11px 11px 12px;
+    gap: 5px;
+  }
+  .mf-pcard-name {
+    font-size: 14.5px;
+  }
+  .mf-pcard-meta {
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+  .mf-pcard-unit {
+    white-space: nowrap;
+  }
+  .mf-pcard-foot {
+    gap: 6px;
+  }
+  .mf-pcard-price .price {
+    font-size: 15.5px;
+  }
+  .mf-add-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+  }
+  .mf-band {
+    padding: 22px 18px;
+  }
+  .mf-panel-head {
+    padding: 14px;
+  }
+  .mf-panel-body {
+    padding: 12px;
+  }
+  /* Espace client : menu en onglets défilants */
+  .mf-account-layout {
+    gap: 16px;
+  }
+  .mf-account-nav {
+    padding: 10px;
+  }
+  .mf-account-nav .user {
+    padding: 4px 4px 10px;
+    margin-bottom: 8px;
+  }
+  .mf-account-nav nav {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 4px;
+    scrollbar-width: none;
+  }
+  .mf-account-nav nav a,
+  .mf-account-nav .logout {
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: auto;
+    padding: 9px 12px;
+  }
+  .mf-band-list,
+  .mf-band-item {
+    min-width: 0;
   }
   .mf-footer-top {
     grid-template-columns: 1fr;
@@ -153,5 +244,23 @@
   .mf-cat-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
+  }
+}
+
+/* Téléphones étroits : logo plus compact pour laisser la place aux 4 icônes */
+@media (max-width: 400px) {
+  .mf-header .mf-logo svg {
+    width: 32px;
+    height: 32px;
+  }
+  .mf-header .mf-logo-name {
+    font-size: 17.5px;
+  }
+}
+
+/* Très petits téléphones (< 360px) : les favoris restent accessibles via le menu */
+@media (max-width: 359px) {
+  .mf-header-actions .mf-fav-btn {
+    display: none;
   }
 }

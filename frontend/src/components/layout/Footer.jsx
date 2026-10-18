@@ -13,12 +13,12 @@ import Logo from '../brand/Logo'
 import { settings } from '../../data/content'
 
 const CATEGORIES = [
-  { to: '/shop?category=cat-fruits', label: 'Fruits' },
-  { to: '/shop?category=cat-legumes', label: 'Légumes' },
-  { to: '/shop?category=cat-tubercules', label: 'Tubercules' },
-  { to: '/shop?category=cat-cereales', label: 'Céréales' },
-  { to: '/shop?category=cat-epices', label: 'Épices' },
-  { to: '/shop?category=cat-vivriers', label: 'Produits vivriers' },
+  { to: '/shop?category=fruits', label: 'Fruits' },
+  { to: '/shop?category=legumes', label: 'Légumes' },
+  { to: '/shop?category=tubercules', label: 'Tubercules' },
+  { to: '/shop?category=cereales', label: 'Céréales' },
+  { to: '/shop?category=epices', label: 'Épices' },
+  { to: '/shop?category=produits-vivriers', label: 'Produits vivriers' },
 ]
 
 const HELP = [
@@ -108,7 +108,8 @@ export default function Footer() {
             © {new Date().getFullYear()} {settings.storeName}. Tous droits réservés.
           </span>
           <span>
-            Produits frais du terroir camerounais · Douala · Yaoundé
+            Produits frais du terroir camerounais · Douala · Yaoundé ·{' '}
+            <Link to="/credits-photos">Crédits photos</Link>
           </span>
         </div>
       </div>

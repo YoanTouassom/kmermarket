@@ -152,6 +152,7 @@ export const SEED_VERSION = 2
 /* ---- Clés localStorage ---- */
 export const STORAGE_KEYS = {
   CART: 'kmermarket.cart',
+  UI: 'kmermarket.ui',
   AUTH: 'kmermarket.auth',
   CATALOG: 'kmermarket.catalog',
   ORDERS: 'kmermarket.orders',

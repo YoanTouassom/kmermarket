@@ -15,7 +15,7 @@ import { env, isProd } from '../config/env.js'
 function respondWithToken(res, user, status = 200) {
   const token = signToken(user)
 
-  // En production cross-domain (frontend Vercel ↔ API Render), le navigateur
+  // En production cross-domain (frontend et API sur deux domaines), le navigateur
   // n'accepte le cookie tiers que sous `SameSite=None; Secure` (HTTPS requis).
   // En local (même origine logique), on garde `lax` pour une sécurité maximale.
   res.cookie(AUTH_COOKIE, token, {

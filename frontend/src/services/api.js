@@ -5,7 +5,9 @@
  * (VITE_API_URL), cookies HttpOnly inclus, et erreurs normalisées
  * en `{ status, message, details }` pour les pages.
  */
-const RAW_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api'
+// En production, l'API est servie par le même domaine (vercel.json → /api).
+const RAW_BASE =
+  import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api')
 const API_BASE = String(RAW_BASE).replace(/\/+$/, '')
 
 export class ApiError extends Error {

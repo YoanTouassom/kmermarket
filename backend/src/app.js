@@ -19,9 +19,9 @@ export function createApp() {
 
   app.disable('x-powered-by')
 
-  // Derrière Render (TLS terminé par le proxy), Express doit faire confiance
+  // Derrière le proxy Vercel (TLS terminé en amont), Express doit faire confiance
   // à `X-Forwarded-Proto` pour que les cookies `Secure` / `SameSite=None`
-  // fonctionnent correctement en production cross-domain (Vercel ↔ Render).
+  // fonctionnent correctement en production.
   app.set('trust proxy', 1)
 
   app.use(

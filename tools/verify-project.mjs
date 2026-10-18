@@ -27,7 +27,8 @@ console.log('\n🔍 KmerMarket — vérification du projet\n')
 console.log('📁 Fichiers requis :')
 const required = [
   'package.json',
-  'render.yaml',
+  'vercel.json',
+  'api/index.js',
   'DEPLOY.md',
   '.env.production.example',
   'backend/package.json',
@@ -41,7 +42,6 @@ const required = [
   'backend/src/database/seed.js',
   'frontend/package.json',
   'frontend/vite.config.js',
-  'frontend/vercel.json',
   'frontend/index.html',
   'frontend/src/main.jsx',
   'frontend/src/App.jsx',
@@ -101,7 +101,7 @@ try {
 
   const pool = fs.readFileSync(path.join(root, 'backend/src/database/pool.js'), 'utf8')
   if (pool.includes('DATABASE_URL') || pool.includes('connectionString'))
-    ok('pool compatible DATABASE_URL (Neon/Render/Railway)')
+    ok('pool compatible DATABASE_URL (Neon)')
   else fail('pool incompatible DATABASE_URL', 'voir backend/src/database/pool.js')
 } catch {
   fail('lecture des fichiers de contrat impossible')

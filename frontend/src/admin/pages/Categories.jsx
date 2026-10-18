@@ -5,6 +5,7 @@ import { useCatalogStore } from '../../store/catalogStore'
 import { useUIStore } from '../../store/uiStore'
 import AdminToolbar from '../components/AdminToolbar'
 import { Button, Field, Input, Textarea, Modal, EmptyState, ConfirmDialog, Spinner } from '../../components/ui/primitives'
+import { imageUrlError } from '../../utils/images'
 
 const EMPTY = { name: '', description: '', image: '' }
 
@@ -36,6 +37,7 @@ export default function Categories() {
   const save = async (e) => {
     e.preventDefault()
     if (!form.name.trim()) return
+    if (imageUrlError(form.image)) return error(imageUrlError(form.image))
     setSaving(true)
     try {
       if (editing === 'new') await categoryService.create(form)
@@ -134,8 +136,8 @@ export default function Categories() {
             </Field>
           </div>
           <div className="full">
-            <Field label="URL de l’image">
-              <Input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="https://…" />
+            <Field label="URL de l’image" error={imageUrlError(form.image)} hint="Clic droit sur l’image en ligne → « Copier l’adresse de l’image ».">
+              <Input value={form.image} onChange={(e) => setForm({ ...form, image: e.target.value })} placeholder="https://…" error={imageUrlError(form.image)} />
             </Field>
           </div>
         </form>

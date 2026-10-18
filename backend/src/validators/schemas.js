@@ -25,6 +25,27 @@ const phoneSchema = z
     message: 'Numéro de téléphone trop long.',
   })
 
+/**
+ * URL d'image (produit, catégorie) : adresse web ou chemin du site.
+ * Les images intégrées « data:… » sont refusées : elles pèsent des dizaines
+ * de Ko et alourdiraient chaque liste de produits renvoyée par l'API.
+ */
+const imageUrlSchema = z
+  .string()
+  .trim()
+  .refine((v) => !/^data:/i.test(v), {
+    message:
+      "Cette image est intégrée (data:…), pas une adresse. Ouvrez l'image en ligne puis clic droit → « Copier l'adresse de l'image ».",
+  })
+  .refine((v) => v === '' || /^(https?:\/\/|\/)/i.test(v), {
+    message: "L'adresse de l'image doit commencer par https:// (ou http://).",
+  })
+  .refine((v) => v.length <= 2048, {
+    message: "L'adresse de l'image est trop longue (2048 caractères maximum).",
+  })
+  .optional()
+  .default('')
+
 const optionalText = (max = 300) =>
   z
     .string()
@@ -132,7 +153,7 @@ export const productSchema = z.object({
   oldPrice: z.coerce.number().min(0).optional().nullable(),
   unit: z.string().trim().max(40).optional().default('Unité'),
   stock: z.coerce.number().int().min(0).optional().default(0),
-  image: z.string().trim().max(500).optional().default(''),
+  image: imageUrlSchema,
   origin: z.string().trim().max(80).optional().default(''),
   rating: z.coerce.number().min(0).max(5).optional().default(0),
   reviews: z.coerce.number().int().min(0).optional().default(0),
@@ -231,7 +252,7 @@ export const categorySchema = z.object({
   description: z.string().trim().max(600).optional().default(''),
   icon: z.string().trim().max(40).optional().default('Leaf'),
   color: z.string().trim().max(20).optional().default('#1b7f52'),
-  image: z.string().trim().max(500).optional().default(''),
+  image: imageUrlSchema,
 })
 
 export const categoryUpdateSchema = categorySchema.partial()

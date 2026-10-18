@@ -6,6 +6,7 @@ import { useCatalogStore } from '../../store/catalogStore'
 import { useUIStore } from '../../store/uiStore'
 import { Button, Field, Input, Textarea, Select, Spinner } from '../../components/ui/primitives'
 import { SELL_UNITS } from '../../utils/constants'
+import { imageUrlError } from '../../utils/images'
 
 const EMPTY = {
   name: '', categoryId: '', price: '', oldPrice: '', unit: '1 kg', stock: '',
@@ -60,6 +61,7 @@ export default function ProductForm() {
     if (!form.categoryId) e.categoryId = 'Choisissez une catégorie.'
     if (!(Number(form.price) > 0)) e.price = 'Prix invalide.'
     if (form.stock === '' || Number(form.stock) < 0) e.stock = 'Stock invalide.'
+    if (imageUrlError(form.image)) e.image = imageUrlError(form.image)
     setErrs(e)
     return Object.keys(e).length === 0
   }
@@ -79,7 +81,7 @@ export default function ProductForm() {
         origin: form.origin,
         tagline: form.tagline,
         description: form.description,
-        image: form.image,
+        image: form.image.trim(),
         tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
         featured: !!form.featured,
         isNew: !!form.isNew,
@@ -147,8 +149,8 @@ export default function ProductForm() {
               </Field>
             </div>
             <div className="full">
-              <Field label="URL de l’image" hint="Vous pourrez remplacer par des images locales dans src/assets.">
-                <Input value={form.image} onChange={(e) => set('image', e.target.value)} placeholder="https://…" />
+              <Field label="URL de l’image" error={errs.image} hint="Sur la page de l’image : clic droit → « Copier l’adresse de l’image », puis collez-la ici.">
+                <Input value={form.image} onChange={(e) => set('image', e.target.value)} placeholder="https://…" error={errs.image} />
               </Field>
             </div>
             <div className="full">

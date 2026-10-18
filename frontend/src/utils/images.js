@@ -34,3 +34,18 @@ export function onImageError(e) {
   e.currentTarget.onerror = null
   e.currentTarget.src = IMAGE_PLACEHOLDER
 }
+
+/**
+ * Vérifie une URL d'image saisie dans l'admin (mêmes règles que l'API).
+ * Renvoie un message d'erreur, ou '' si l'adresse est acceptable.
+ */
+export function imageUrlError(value) {
+  const v = String(value || '').trim()
+  if (!v) return ''
+  if (/^data:/i.test(v)) {
+    return "Image intégrée (data:…) : ouvrez l'image en ligne puis clic droit → « Copier l'adresse de l'image »."
+  }
+  if (!/^(https?:\/\/|\/)/i.test(v)) return "L'adresse doit commencer par https://"
+  if (v.length > 2048) return 'Adresse trop longue (2048 caractères maximum).'
+  return ''
+}

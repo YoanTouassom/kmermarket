@@ -43,6 +43,12 @@ export const orderService = {
     return unwrapList(res)
   },
 
+  /** Admin : commandes d'un client donné (fiche client). */
+  async adminListByUser(userId) {
+    const res = await api.get(`/admin/orders${toQueryString({ userId })}`)
+    return unwrapList(res)
+  },
+
   async getById(id) {
     return api.get(`/orders/mine/${encodeURIComponent(id)}`)
   },

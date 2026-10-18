@@ -260,6 +260,11 @@ export async function listAll(filters = {}) {
     where.push(`o.status = $${params.length}`)
   }
 
+  if (filters.userId) {
+    params.push(filters.userId)
+    where.push(`o.user_id = $${params.length}`)
+  }
+
   const q = String(filters.search || '').trim()
   if (q) {
     params.push(`%${q}%`)

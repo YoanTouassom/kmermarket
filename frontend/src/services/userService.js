@@ -13,14 +13,14 @@ export const userService = {
     return api.get(`/admin/users/${encodeURIComponent(id)}`)
   },
 
-  async setStatus(id, status) {
-    return api.patch(`/admin/users/${encodeURIComponent(id)}/status`, { status })
+  /** L'API attend { isActive: boolean } (et renvoie status: 'active' | 'inactive'). */
+  async setStatus(id, isActive) {
+    return api.patch(`/admin/users/${encodeURIComponent(id)}/status`, { isActive: !!isActive })
   },
 
-  async toggleStatus(id) {
-    const user = await this.getById(id)
-    const next = user?.status === 'active' ? 'inactive' : 'active'
-    return this.setStatus(id, next)
+  /** Inverse le statut d'un utilisateur déjà chargé (liste admin). */
+  async toggleStatus(user) {
+    return this.setStatus(user.id, user.status !== 'active')
   },
 
   async setRole(id, role) {

@@ -46,6 +46,12 @@ CREATE TABLE IF NOT EXISTS users (
   updated_at     TIMESTAMPTZ  NOT NULL DEFAULT now()
 );
 
+-- Bases créées avec une version antérieure : CREATE TABLE IF NOT EXISTS
+-- n'ajoute pas les colonnes apparues depuis. Sans effet si elles existent.
+ALTER TABLE users ADD COLUMN IF NOT EXISTS city         VARCHAR(80);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS neighborhood VARCHAR(120);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS address      TEXT;
+
 CREATE UNIQUE INDEX IF NOT EXISTS users_phone_unique
   ON users (phone) WHERE phone IS NOT NULL AND phone <> '';
 

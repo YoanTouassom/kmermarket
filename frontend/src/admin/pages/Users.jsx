@@ -34,15 +34,17 @@ export default function AdminUsers() {
 
   const openDetail = async (u) => {
     setDetail(u)
-    const orders = await orderService.listByUser(u.id)
+    const orders = await orderService.adminListByUser(u.id)
     setDetailOrders(orders)
   }
 
   const toggle = async () => {
     try {
-      await userService.toggleStatus(ask.id)
-      setUsers((prev) => prev.map((u) => (u.id === ask.id ? { ...u, status: u.status === 'active' ? 'inactive' : 'active' } : u)))
-      success('Statut du compte mis à jour')
+      const updated = await userService.toggleStatus(ask)
+      // Statut renvoyé par l'API (repli : inversion locale)
+      const nextStatus = updated?.status || (ask.status === 'active' ? 'inactive' : 'active')
+      setUsers((prev) => prev.map((u) => (u.id === ask.id ? { ...u, status: nextStatus } : u)))
+      success(nextStatus === 'active' ? 'Compte réactivé' : 'Compte désactivé')
     } catch (e) {
       error(e.message)
     } finally {

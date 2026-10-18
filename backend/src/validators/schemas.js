@@ -212,6 +212,8 @@ export const quoteSchema = z.object({
 export const orderQuerySchema = z.object({
   status: z.string().trim().optional().default('all'),
   search: z.string().trim().max(80).optional().default(''),
+  // Commandes d'un client précis (fiche client de l'admin)
+  userId: z.coerce.number().int().positive().optional(),
 })
 
 export const orderStatusSchema = z.object({

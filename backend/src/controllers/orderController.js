@@ -31,8 +31,8 @@ export const myOrderById = asyncHandler(async (req, res) => {
   res.json(order)
 })
 
-export const adminOrders = asyncHandler(async (_req, res) => {
-  const orders = await orderService.listAll(_req.query || {})
+export const adminOrders = asyncHandler(async (req, res) => {
+  const orders = await orderService.listAll(req.validatedQuery || req.query || {})
   res.json(orders)
 })
 

@@ -33,6 +33,7 @@ import AdminOrderDetail from "./admin/pages/OrderDetail";
 import Users from "./admin/pages/Users";
 import Content from "./admin/pages/Content";
 import Settings from "./admin/pages/Settings";
+import Toaster from "./components/ui/Toaster";
 
 function useBootstrap() {
   const init = useAuthStore((s) => s.init);
@@ -86,7 +87,11 @@ export default function App() {
   const ready = useBootstrap();
   if (!ready) return <FullPageLoader />;
 
+  // Toaster global : les pages hors layout (login, register…) doivent
+  // aussi pouvoir afficher leurs messages.
   return (
+    <>
+    <Toaster />
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
@@ -146,5 +151,6 @@ export default function App() {
         <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
+    </>
   );
 }

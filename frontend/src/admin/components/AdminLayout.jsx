@@ -15,7 +15,6 @@ import {
   ExternalLink,
 } from 'lucide-react'
 import Logo from '../../components/brand/Logo'
-import Toaster from '../../components/ui/Toaster'
 import { useAuthStore } from '../../store/authStore'
 import { initials } from '../../utils/format'
 
@@ -115,8 +114,6 @@ export default function AdminLayout() {
           <Outlet />
         </div>
       </div>
-
-      <Toaster />
     </div>
   )
 }

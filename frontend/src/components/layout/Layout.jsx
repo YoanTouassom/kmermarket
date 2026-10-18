@@ -1,9 +1,8 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from './Navbar'
 import Footer from './Footer'
-import Toaster from '../ui/Toaster'
 
-/** Layout public : navbar + contenu + footer + notifications. */
+/** Layout public : navbar + contenu + footer (notifications : voir App). */
 export default function Layout() {
   return (
     <div className="app-shell">
@@ -12,7 +11,6 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <Toaster />
     </div>
   )
 }

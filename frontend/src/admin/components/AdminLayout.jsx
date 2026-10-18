@@ -13,6 +13,7 @@ import {
   Store,
   LogOut,
   ExternalLink,
+  MessageSquare,
 } from 'lucide-react'
 import Logo from '../../components/brand/Logo'
 import { useAuthStore } from '../../store/authStore'
@@ -38,6 +39,7 @@ const NAV_GROUPS = [
     items: [
       { to: '/admin/orders', label: 'Commandes', icon: ShoppingCart },
       { to: '/admin/users', label: 'Clients', icon: Users },
+      { to: '/admin/reviews', label: 'Avis clients', icon: MessageSquare },
     ],
   },
   {

@@ -221,6 +221,37 @@ CREATE TABLE IF NOT EXISTS site_settings (
 );
 
 -- Déclencheur : mise à jour automatique de updated_at -------------------
+-- ---------- Avis clients sur les produits ----------
+-- Un avis par client et par produit (modifiable). La note et le nombre d'avis
+-- affichés sur les produits (products.rating / products.reviews) sont
+-- recalculés à partir de cette table : plus aucune valeur inventée.
+CREATE TABLE IF NOT EXISTS product_reviews (
+  id          SERIAL PRIMARY KEY,
+  product_id  INTEGER     NOT NULL REFERENCES products (id) ON DELETE CASCADE,
+  user_id     INTEGER     NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+  rating      SMALLINT    NOT NULL CHECK (rating BETWEEN 1 AND 5),
+  comment     TEXT        NOT NULL,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
+  UNIQUE (product_id, user_id)
+);
+CREATE INDEX IF NOT EXISTS product_reviews_product_idx ON product_reviews (product_id);
+CREATE INDEX IF NOT EXISTS product_reviews_recent_idx  ON product_reviews (created_at DESC);
+
+-- Notes produits = moyenne réelle des avis (0 sans avis). Idempotent.
+UPDATE products p
+   SET rating = r.avg, reviews = r.cnt
+  FROM (
+    SELECT p2.id,
+           COALESCE(ROUND(AVG(pr.rating)::numeric, 1), 0) AS avg,
+           COUNT(pr.id)::int AS cnt
+      FROM products p2
+      LEFT JOIN product_reviews pr ON pr.product_id = p2.id
+     GROUP BY p2.id
+  ) r
+ WHERE r.id = p.id
+   AND (p.rating IS DISTINCT FROM r.avg OR p.reviews IS DISTINCT FROM r.cnt);
+
 CREATE OR REPLACE FUNCTION set_updated_at() RETURNS trigger AS $$
 BEGIN
   NEW.updated_at = now();
@@ -231,7 +262,7 @@ DO $$
 DECLARE
   t TEXT;
 BEGIN
-  FOREACH t IN ARRAY ARRAY['users', 'addresses', 'categories', 'products', 'orders', 'carts']
+  FOREACH t IN ARRAY ARRAY['users', 'addresses', 'categories', 'products', 'orders', 'carts', 'product_reviews']
   LOOP
     EXECUTE format('DROP TRIGGER IF EXISTS trg_%1$s_updated_at ON %1$s', t);
     EXECUTE format(

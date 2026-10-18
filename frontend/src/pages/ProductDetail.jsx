@@ -17,6 +17,7 @@ import { useCatalogStore } from "../store/catalogStore";
 import { useCartStore } from "../store/cartStore";
 import { useUIStore } from "../store/uiStore";
 import ProductCard from "../components/ProductCard";
+import ProductReviews from "../components/ProductReviews";
 import {
   Button,
   Badge,
@@ -148,7 +149,15 @@ export default function ProductDetail() {
               marginTop: 12,
             }}
           >
-            <StarRating value={product.rating} count={product.reviews} />
+            {product.reviews > 0 ? (
+              <a href="#avis" className="mf-pdp-rating-link">
+                <StarRating value={product.rating} count={product.reviews} />
+              </a>
+            ) : (
+              <a href="#avis" className="mf-pdp-rating-link none">
+                Aucun avis — soyez le premier
+              </a>
+            )}
             <span style={{ color: "var(--ink-400)", fontSize: 13 }}>
               · {product.sold} vendus
             </span>
@@ -244,6 +253,15 @@ export default function ProductDetail() {
             </div>
           )}
         </div>
+      </div>
+
+      <div id="avis">
+        <ProductReviews
+          productId={product.id}
+          onStats={({ average, count }) =>
+            setProduct((p) => (p && (p.rating !== average || p.reviews !== count) ? { ...p, rating: average, reviews: count } : p))
+          }
+        />
       </div>
 
       {related.length > 0 && (

@@ -32,6 +32,7 @@ import Categories from "./admin/pages/Categories";
 import AdminOrders from "./admin/pages/Orders";
 import AdminOrderDetail from "./admin/pages/OrderDetail";
 import Users from "./admin/pages/Users";
+import AdminReviews from "./admin/pages/Reviews";
 import Content from "./admin/pages/Content";
 import Settings from "./admin/pages/Settings";
 import Toaster from "./components/ui/Toaster";
@@ -149,6 +150,7 @@ export default function App() {
         <Route path="orders" element={<AdminOrders />} />
         <Route path="orders/:id" element={<AdminOrderDetail />} />
         <Route path="users" element={<Users />} />
+        <Route path="reviews" element={<AdminReviews />} />
         <Route path="content" element={<Content />} />
         <Route path="settings" element={<Settings />} />
       </Route>

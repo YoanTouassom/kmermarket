@@ -5,7 +5,7 @@ import { ArrowRight, Truck, Leaf, Sparkles } from "lucide-react";
 import { productService } from "../services/productService";
 import { useCatalogStore } from "../store/catalogStore";
 import { siteContent } from "../data/content";
-import { testimonials } from "../data/testimonials";
+import { reviewService } from "../services/reviewService";
 import {
   SectionHeading,
   CategoryGrid,
@@ -25,10 +25,16 @@ export default function Home() {
   const [promos, setPromos] = useState([]);
   const [popular, setPopular] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     load();
   }, [load]);
+
+  // Vrais avis clients (aucun avis inventé) ; la section est masquée s'il n'y en a pas.
+  useEffect(() => {
+    reviewService.recent(6).then(setReviews).catch(() => setReviews([]));
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -281,31 +287,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="mf-section alt">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Ils nous font confiance"
-            title="La parole à nos clients"
-            text="Des familles et des professionnels qui se réapprovisionnent chaque semaine."
-          />
-          <div className="mf-testi-grid">
-            {testimonials.map((t) => (
-              <figure key={t.id} className="mf-testi">
-                <StarRating value={t.rating || 5} />
-                <blockquote className="quote">“{t.text || t.quote}”</blockquote>
-                <figcaption className="mf-testi-author">
-                  <img src={t.avatar} alt={t.name} />
-                  <div>
-                    <div className="nm">{t.name}</div>
-                    <div className="ro">{t.role}</div>
-                  </div>
-                </figcaption>
-              </figure>
-            ))}
+      {/* AVIS CLIENTS (réels) */}
+      {reviews.length > 0 && (
+        <section className="mf-section alt">
+          <div className="container">
+            <SectionHeading
+              eyebrow="Avis vérifiés"
+              title="La parole à nos clients"
+              text="Les derniers avis laissés par nos clients sur les produits."
+            />
+            <div className="mf-testi-grid">
+              {reviews.map((r) => (
+                <figure key={r.id} className="mf-testi">
+                  <StarRating value={r.rating} />
+                  <blockquote className="quote">“{r.comment}”</blockquote>
+                  <figcaption className="mf-testi-author">
+                    <span className="mf-testi-initial">{r.author.charAt(0)}</span>
+                    <div>
+                      <div className="nm">{r.author}</div>
+                      <Link to={`/product/${r.productId}`} className="ro">
+                        Avis sur : {r.productName}
+                      </Link>
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="mf-section">

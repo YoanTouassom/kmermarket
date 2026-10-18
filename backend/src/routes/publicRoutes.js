@@ -8,6 +8,7 @@ import { Router } from 'express'
 
 import * as catalog from '../controllers/catalogController.js'
 import * as auth from '../controllers/authController.js'
+import * as reviews from '../controllers/reviewController.js'
 import { authenticate, optionalAuth } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import {
@@ -17,6 +18,7 @@ import {
   resetPasswordSchema,
   productQuerySchema,
   suggestQuerySchema,
+  reviewSchema,
 } from '../validators/schemas.js'
 
 const router = Router()
@@ -31,6 +33,17 @@ router.get('/products/new', catalog.newArrivals)
 router.get('/products/suggest', validate({ query: suggestQuerySchema }), catalog.suggestProducts)
 router.get('/products/:idOrSlug', catalog.getProduct)
 router.get('/products/:idOrSlug/related', catalog.getRelatedProducts)
+
+/* ------------------------------ Avis clients ------------------------------ */
+router.get('/reviews/recent', reviews.recentReviews)
+router.get('/products/:idOrSlug/reviews', optionalAuth, reviews.productReviews)
+router.post(
+  '/products/:idOrSlug/reviews',
+  authenticate,
+  validate({ body: reviewSchema }),
+  reviews.saveMyReview
+)
+router.delete('/products/:idOrSlug/reviews/mine', authenticate, reviews.deleteMyReview)
 
 router.get('/categories', catalog.listCategories)
 router.get('/categories/:id', catalog.getCategory)

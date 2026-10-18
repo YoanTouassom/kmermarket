@@ -6,6 +6,7 @@ import { Router } from 'express'
 
 import * as admin from '../controllers/adminController.js'
 import * as order from '../controllers/orderController.js'
+import * as reviews from '../controllers/reviewController.js'
 import { authenticate, requireAdmin } from '../middleware/auth.js'
 import { validate } from '../middleware/validate.js'
 import {
@@ -81,6 +82,11 @@ router.delete(
   validate({ params: idParam }),
   admin.removeCategory
 )
+
+/* ------------------------------ Avis clients ------------------------------ */
+
+router.get('/reviews', reviews.adminReviews)
+router.delete('/reviews/:id', validate({ params: idParam }), reviews.adminDeleteReview)
 
 /* --------------------------- Utilisateurs --------------------------- */
 

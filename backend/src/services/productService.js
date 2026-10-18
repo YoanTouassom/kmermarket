@@ -197,8 +197,10 @@ function normalizePayload(payload = {}, fallback = {}) {
     stock: Math.max(Number.parseInt(payload.stock ?? fallback.stock ?? 0, 10) || 0, 0),
     image: payload.image ?? fallback.image ?? '',
     origin: payload.origin ?? fallback.origin ?? '',
-    rating: Number(payload.rating ?? fallback.rating ?? 0) || 0,
-    reviews: Number.parseInt(payload.reviews ?? fallback.reviews ?? 0, 10) || 0,
+    // Note et nombre d'avis : uniquement issus des vrais avis (reviewService),
+    // jamais saisis — même un appel direct à l'API ne peut pas les modifier.
+    rating: Number(fallback.rating ?? 0) || 0,
+    reviews: Number.parseInt(fallback.reviews ?? 0, 10) || 0,
     sold: Number.parseInt(payload.sold ?? fallback.sold ?? 0, 10) || 0,
     tags: Array.isArray(payload.tags) ? payload.tags : fallback.tags || [],
     available:

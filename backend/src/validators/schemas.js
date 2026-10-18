@@ -258,3 +258,16 @@ export const categorySchema = z.object({
 })
 
 export const categoryUpdateSchema = categorySchema.partial()
+/* ---------------------------- Avis produits ---------------------------- */
+export const reviewSchema = z.object({
+  rating: z.coerce
+    .number()
+    .int()
+    .min(1, { message: 'Choisissez une note entre 1 et 5 étoiles.' })
+    .max(5, { message: 'Choisissez une note entre 1 et 5 étoiles.' }),
+  comment: z
+    .string()
+    .trim()
+    .min(10, { message: 'Votre avis doit contenir au moins 10 caractères.' })
+    .max(1000, { message: 'Votre avis est trop long (1000 caractères maximum).' }),
+})

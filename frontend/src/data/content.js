@@ -16,7 +16,6 @@ export const siteContent = {
     stats: [
       { value: '30+', label: 'Produits du terroir' },
       { value: '14', label: 'Villes desservies' },
-      { value: '4,8/5', label: 'Note clients' },
     ],
   },
   banners: [

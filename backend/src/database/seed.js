@@ -72,7 +72,7 @@ async function seedProducts(products) {
          description = EXCLUDED.description, tagline = EXCLUDED.tagline,
          price = EXCLUDED.price, old_price = EXCLUDED.old_price, unit = EXCLUDED.unit,
          stock = EXCLUDED.stock, image = EXCLUDED.image, origin = EXCLUDED.origin,
-         rating = EXCLUDED.rating, reviews = EXCLUDED.reviews, sold = EXCLUDED.sold,
+         sold = EXCLUDED.sold,
          tags = EXCLUDED.tags, is_active = EXCLUDED.is_active,
          is_featured = EXCLUDED.is_featured, is_new = EXCLUDED.is_new,
          is_on_sale = EXCLUDED.is_on_sale, updated_at = now()`,
@@ -82,8 +82,10 @@ async function seedProducts(products) {
         Number(p.price) || 0,
         p.oldPrice === null || p.oldPrice === undefined ? null : Number(p.oldPrice),
         p.unit || 'Unité', Math.max(Number.parseInt(p.stock, 10) || 0, 0),
-        p.image || '', p.origin || '', Number(p.rating) || 0,
-        Number.parseInt(p.reviews, 10) || 0, Number.parseInt(p.sold, 10) || 0,
+        // Note et nombre d'avis : calculés à partir des vrais avis (schema.sql),
+        // jamais repris du fichier de démo.
+        p.image || '', p.origin || '', 0,
+        0, Number.parseInt(p.sold, 10) || 0,
         Array.isArray(p.tags) ? p.tags : [],
         p.available !== false, !!p.featured, !!p.isNew, !!onSale,
       ]
@@ -102,7 +104,6 @@ async function writeJson(table, key, value) {
 }
 async function seedContent(seed) {
   const content = { ...(seed.siteContent || {}) }
-  if (seed.testimonials) content.testimonials = seed.testimonials
   await writeJson('site_content', 'site', content)
   await writeJson('site_settings', 'app', seed.settings || {})
   console.log('[seed] contenu + paramÃ¨tres.')

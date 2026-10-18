@@ -53,7 +53,11 @@ export default function ProductCard({ product, compact = false }) {
           {product.name}
         </Link>
         <div className="mf-pcard-meta">
-          <StarRating value={product.rating} size={13} />
+          {product.reviews > 0 ? (
+            <StarRating value={product.rating} count={product.reviews} size={13} />
+          ) : (
+            <span className="mf-pcard-noreview">Aucun avis</span>
+          )}
           <span className="mf-pcard-unit">{product.unit}</span>
         </div>
         <div className="mf-pcard-foot">

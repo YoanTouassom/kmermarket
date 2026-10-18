@@ -63,8 +63,11 @@ async function requireProduct(productId, client = null) {
 
 /** Erreur de stock homogène. */
 function stockError(product, available) {
+  // La quantité restante n'est pas révélée au client.
   return ApiError.badRequest(
-    `Stock insuffisant : ${available} ${product.unit} disponible(s) pour « ${product.name} ».`
+    available > 0
+      ? `Quantité demandée indisponible pour « ${product.name} ». Essayez une quantité plus petite.`
+      : `« ${product.name} » est en rupture de stock.`
   )
 }
 

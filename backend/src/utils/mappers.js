@@ -147,7 +147,8 @@ export function toCartItem(row) {
     price: Number(row.price),
     oldPrice: row.old_price === null ? null : Number(row.old_price),
     image: row.image,
-    stock: Number(row.stock),
+    // Quantité en stock non exposée au client : seulement disponible ou non.
+    inStock: Number(row.stock) > 0,
     quantity: Number(row.quantity),
     categoryId: row.category_id === null ? '' : String(row.category_id),
   }

@@ -25,6 +25,8 @@ const router = Router()
 
 /* ------------------------------ Catalogue ------------------------------ */
 
+// Identifie l'admin éventuel : lui seul reçoit les quantités en stock.
+router.use('/products', optionalAuth)
 router.get('/products', validate({ query: productQuerySchema }), catalog.listProducts)
 router.get('/products/featured', catalog.featuredProducts)
 router.get('/products/on-sale', catalog.onSaleProducts)
@@ -36,7 +38,7 @@ router.get('/products/:idOrSlug/related', catalog.getRelatedProducts)
 
 /* ------------------------------ Avis clients ------------------------------ */
 router.get('/reviews/recent', reviews.recentReviews)
-router.get('/products/:idOrSlug/reviews', optionalAuth, reviews.productReviews)
+router.get('/products/:idOrSlug/reviews', reviews.productReviews)
 router.post(
   '/products/:idOrSlug/reviews',
   authenticate,

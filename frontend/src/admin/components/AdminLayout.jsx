@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink, Outlet, Link } from 'react-router-dom'
 import {
   LayoutDashboard,
@@ -19,6 +19,7 @@ import Logo from '../../components/brand/Logo'
 import { useAuthStore } from '../../store/authStore'
 import { initials } from '../../utils/format'
 import { useOrderNotifStore } from '../../store/orderNotifStore'
+import { useCatalogStore } from '../../store/catalogStore'
 import { useOrderNotifications } from '../hooks/useOrderNotifications'
 import OrderBell from './OrderBell'
 
@@ -57,6 +58,12 @@ export default function AdminLayout() {
   const logout = useAuthStore((s) => s.logout)
   const unreadOrders = useOrderNotifStore((s) => s.unread.length)
   useOrderNotifications()
+  // Le catalogue a pu être chargé avant la connexion (sans les quantités en
+  // stock, réservées à l'admin) : on le recharge à l'ouverture de l'admin.
+  const refreshCatalog = useCatalogStore((s) => s.refresh)
+  useEffect(() => {
+    refreshCatalog()
+  }, [refreshCatalog])
 
   return (
     <div className="mf-admin">

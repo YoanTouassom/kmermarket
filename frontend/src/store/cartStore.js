@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { STORAGE_KEYS } from '../utils/constants'
 import { cartService } from '../services/cartService'
+import { isOutOfStock } from '../utils/stock'
 import { useAuthStore } from './authStore'
 
 /**
@@ -70,7 +71,7 @@ export const useCartStore = create(
             price: product.price,
             oldPrice: product.oldPrice || null,
             image: product.image,
-            stock: product.stock,
+            inStock: !isOutOfStock(product),
             quantity,
           })
         }

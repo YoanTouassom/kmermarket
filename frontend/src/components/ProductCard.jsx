@@ -5,6 +5,7 @@ import { Badge, StarRating } from './ui/primitives'
 import { useCartStore } from '../store/cartStore'
 import { useUIStore } from '../store/uiStore'
 import { IMAGE_PLACEHOLDER, onImageError } from '../utils/images'
+import { isOutOfStock } from '../utils/stock'
 
 /**
  * Carte produit réutilisable (accueil, boutique, résultats, similaires).
@@ -16,7 +17,7 @@ export default function ProductCard({ product, compact = false }) {
   const toggleFavorite = useUIStore((s) => s.toggleFavorite)
 
   const discount = discountPercent(product.price, product.oldPrice)
-  const out = product.stock <= 0 || product.available === false
+  const out = isOutOfStock(product)
   const isFav = favorites.includes(product.id)
 
   const handleAdd = (e) => {

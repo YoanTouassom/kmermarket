@@ -152,8 +152,11 @@ export async function createFromCart(userId, payload = {}) {
         throw ApiError.badRequest(`« ${line.name} » n’est plus disponible à la vente.`)
       }
       if (line.quantity > line.stock) {
+        // Quantité restante non révélée au client.
         throw ApiError.badRequest(
-          `Stock insuffisant pour « ${line.name} » : ${line.stock} ${line.unit} disponible(s).`
+          Number(line.stock) > 0
+            ? `Quantité indisponible pour « ${line.name} » : réduisez la quantité dans votre panier.`
+            : `« ${line.name} » est en rupture de stock : retirez-le de votre panier.`
         )
       }
       subtotal += Number(line.price) * Number(line.quantity)

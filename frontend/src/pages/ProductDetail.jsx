@@ -28,6 +28,7 @@ import {
 } from "../components/ui/primitives";
 import { formatPrice, discountPercent } from "../utils/format";
 import { IMAGE_PLACEHOLDER, onImageError } from "../utils/images";
+import { isOutOfStock } from "../utils/stock";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -98,7 +99,7 @@ export default function ProductDetail() {
 
   const category = categories.find((c) => c.id === product.categoryId);
   const discount = discountPercent(product.price, product.oldPrice);
-  const out = product.stock <= 0 || product.available === false;
+  const out = isOutOfStock(product);
   const isFav = favorites.includes(product.id);
 
   const handleAdd = () => {
@@ -198,7 +199,7 @@ export default function ProductDetail() {
                 className="v"
                 style={{ color: out ? "var(--danger)" : "var(--green-700)" }}
               >
-                {out ? "Rupture de stock" : `${product.stock} en stock`}
+                {out ? "Rupture de stock" : "En stock"}
               </div>
             </div>
             <div className="mf-fact">
